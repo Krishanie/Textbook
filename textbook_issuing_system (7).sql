@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 19, 2023 at 04:38 PM
+-- Generation Time: Mar 31, 2023 at 10:55 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `textbook_issuing_system`
+-- Database: `textbook_issuing_system_new_version`
 --
 
 -- --------------------------------------------------------
@@ -66,7 +66,32 @@ CREATE TABLE `book_site_data` (
 --
 
 INSERT INTO `book_site_data` (`id`, `name`, `title`, `logo`) VALUES
-(1, 'Text Books', 'Text Book Issuing System', 'site_logo-63ce34f1266b41.18466967.png');
+(1, 'Text Book Issuing System', 'Defence Services College', 'site_logo-63ce34f1266b41.18466967.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `book_stock`
+--
+
+CREATE TABLE `book_stock` (
+  `book_id` int(11) NOT NULL,
+  `book_serial_id` text NOT NULL,
+  `book_name` text NOT NULL,
+  `book_language` text NOT NULL,
+  `book_grade` text NOT NULL,
+  `studing_students` text NOT NULL,
+  `leftover_books` text NOT NULL,
+  `extra_requests` text NOT NULL,
+  `total_books` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `book_stock`
+--
+
+INSERT INTO `book_stock` (`book_id`, `book_serial_id`, `book_name`, `book_language`, `book_grade`, `studing_students`, `leftover_books`, `extra_requests`, `total_books`) VALUES
+(1, '342', 'Maths', 's', 'grd1', '24', '4', '4', '34');
 
 -- --------------------------------------------------------
 
@@ -88,180 +113,59 @@ CREATE TABLE `chat` (
 --
 
 INSERT INTO `chat` (`id`, `sender_id`, `reciver_id`, `msg`, `type`, `msg_date_time`) VALUES
-(293, '4', '', 'Hi', 'all', '2023-01-27 11:10 am'),
-(294, '1', '', 'Hi', 'all', '2023-01-27 11:10 am'),
-(298, '4', '', 'oo', 'all', '2023-01-27 11:10 am'),
-(314, 'system', '', 'Sir, Grade 1 Maths Only 5 books left.', 'all', '2023-01-27 11:19 am'),
-(315, 'system', '', 'Sir, Grade 1 Sinhala Only 4 books left.', 'all', '2023-01-27 11:19 am'),
-(317, '4', '', 'Hi', 'all', '2023-02-19 09:06 pm'),
-(319, 'system', '', 'Sir, Grade 9 PTS Only 4 books left.', 'all', '2023-02-19 09:07 pm');
+(321, 'system', '', 'Sir, Grade 1 Maths Only 2 books left.', 'all', '2023-03-20 08:59 pm'),
+(322, 'system', '', 'Sir, Grade 9 PTS Only 4 books left.', 'all', '2023-03-20 08:59 pm'),
+(323, '1', '', 'hi', 'all', '2023-03-20 08:59 pm'),
+(324, '1', '', 'd', 'all', '2023-03-20 09:00 pm'),
+(325, '1', '', 'sad', 'all', '2023-03-20 09:00 pm'),
+(326, '1', '', 'ss', 'all', '2023-03-20 09:01 pm'),
+(327, '4', '', 'ss', 'all', '2023-03-20 09:01 pm'),
+(328, '4', '', 'ss', 'all', '2023-03-20 09:01 pm'),
+(329, '1', '', 'sss', 'all', '2023-03-20 09:02 pm'),
+(330, 'system', '', 'Sir, Grade 1 Maths Only 1 books left.', 'all', '2023-03-29 08:12 pm'),
+(331, 'system', '', 'Sir, Grade 1 Maths Only -1 books left.', 'all', '2023-03-29 08:14 pm'),
+(332, 'system', '', 'Sir, Grade 1 Maths Only -2 books left.', 'all', '2023-03-29 08:17 pm'),
+(333, 'system', '', 'Sir, Grade 1 Maths Only -3 books left.', 'all', '2023-03-29 08:21 pm'),
+(334, 'system', '', 'Sir, Grade 1 Maths Only -5 books left.', 'all', '2023-03-29 08:21 pm'),
+(335, 'system', '', 'Sir, Grade 1 Maths Only -6 books left.', 'all', '2023-03-29 08:22 pm'),
+(336, 'system', '', 'Sir, Grade 1 Maths Only -7 books left.', 'all', '2023-03-29 08:22 pm'),
+(337, 'system', '', 'Sir, Grade 1 Maths Only -8 books left.', 'all', '2023-03-29 08:23 pm'),
+(338, 'system', '', 'Sir, Grade 1 Maths Only -10 books left.', 'all', '2023-03-29 08:23 pm'),
+(339, 'system', '', 'Sir, Grade 1 Maths Only -11 books left.', 'all', '2023-03-29 08:23 pm'),
+(340, 'system', '', 'Sir, Grade 1 Maths Only -12 books left.', 'all', '2023-03-29 08:24 pm'),
+(341, 'system', '', 'Sir, Grade 1 Maths Only -13 books left.', 'all', '2023-03-29 08:25 pm'),
+(342, 'system', '', 'Sir, Grade 1 Maths Only -14 books left.', 'all', '2023-03-29 08:26 pm'),
+(343, 'system', '', 'Sir, Grade 1 Maths Only -15 books left.', 'all', '2023-03-29 08:27 pm'),
+(344, 'system', '', 'Sir, Grade 1 Maths Only -17 books left.', 'all', '2023-03-29 08:30 pm');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `grd1_books`
+-- Table structure for table `grade_connections`
 --
 
-CREATE TABLE `grd1_books` (
+CREATE TABLE `grade_connections` (
   `id` int(11) NOT NULL,
-  `book_name` text NOT NULL,
-  `gv_id` text NOT NULL,
-  `language` text NOT NULL,
-  `total_stu` text NOT NULL,
-  `leftover_books` text NOT NULL,
-  `ex_requests` text NOT NULL,
-  `total_books` text NOT NULL
+  `grade_id` int(11) NOT NULL,
+  `grade_name` text NOT NULL,
+  `take_grade` text NOT NULL,
+  `give_grade` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `grd1_books`
+-- Dumping data for table `grade_connections`
 --
 
-INSERT INTO `grd1_books` (`id`, `book_name`, `gv_id`, `language`, `total_stu`, `leftover_books`, `ex_requests`, `total_books`) VALUES
-(6, 'Maths', '001', 's', '12', '5', '5', '8');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `grd2_books`
---
-
-CREATE TABLE `grd2_books` (
-  `id` int(11) NOT NULL,
-  `book_name` text NOT NULL,
-  `gv_id` text NOT NULL,
-  `language` text NOT NULL,
-  `total_stu` text NOT NULL,
-  `leftover_books` text NOT NULL,
-  `ex_requests` text NOT NULL,
-  `total_books` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `grd3_books`
---
-
-CREATE TABLE `grd3_books` (
-  `id` int(11) NOT NULL,
-  `book_name` text NOT NULL,
-  `gv_id` text NOT NULL,
-  `language` text NOT NULL,
-  `total_stu` text NOT NULL,
-  `leftover_books` text NOT NULL,
-  `ex_requests` text NOT NULL,
-  `total_books` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `grd4_books`
---
-
-CREATE TABLE `grd4_books` (
-  `id` int(11) NOT NULL,
-  `book_name` text NOT NULL,
-  `gv_id` text NOT NULL,
-  `language` text NOT NULL,
-  `total_stu` text NOT NULL,
-  `leftover_books` text NOT NULL,
-  `ex_requests` text NOT NULL,
-  `total_books` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `grd5_books`
---
-
-CREATE TABLE `grd5_books` (
-  `id` int(11) NOT NULL,
-  `book_name` text NOT NULL,
-  `gv_id` text NOT NULL,
-  `language` text NOT NULL,
-  `total_stu` text NOT NULL,
-  `leftover_books` text NOT NULL,
-  `ex_requests` text NOT NULL,
-  `total_books` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `grd6_books`
---
-
-CREATE TABLE `grd6_books` (
-  `id` int(11) NOT NULL,
-  `book_name` text NOT NULL,
-  `gv_id` text NOT NULL,
-  `language` text NOT NULL,
-  `total_stu` text NOT NULL,
-  `leftover_books` text NOT NULL,
-  `ex_requests` text NOT NULL,
-  `total_books` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `grd7_books`
---
-
-CREATE TABLE `grd7_books` (
-  `id` int(11) NOT NULL,
-  `book_name` text NOT NULL,
-  `gv_id` text NOT NULL,
-  `language` text NOT NULL,
-  `total_stu` text NOT NULL,
-  `leftover_books` text NOT NULL,
-  `ex_requests` text NOT NULL,
-  `total_books` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `grd8_books`
---
-
-CREATE TABLE `grd8_books` (
-  `id` int(11) NOT NULL,
-  `book_name` text NOT NULL,
-  `gv_id` text NOT NULL,
-  `language` text NOT NULL,
-  `total_stu` text NOT NULL,
-  `leftover_books` text NOT NULL,
-  `ex_requests` text NOT NULL,
-  `total_books` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `grd9_books`
---
-
-CREATE TABLE `grd9_books` (
-  `id` int(11) NOT NULL,
-  `book_name` text NOT NULL,
-  `gv_id` text NOT NULL,
-  `language` text NOT NULL,
-  `total_stu` text NOT NULL,
-  `leftover_books` text NOT NULL,
-  `ex_requests` text NOT NULL,
-  `total_books` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `grd9_books`
---
-
-INSERT INTO `grd9_books` (`id`, `book_name`, `gv_id`, `language`, `total_stu`, `leftover_books`, `ex_requests`, `total_books`) VALUES
-(6, 'PTS', '003', 's', '54', '4', '3', '56');
+INSERT INTO `grade_connections` (`id`, `grade_id`, `grade_name`, `take_grade`, `give_grade`) VALUES
+(1, 1, 'grd1', 'grd1', 'grd2'),
+(2, 2, 'grd2', 'grd2', 'grd3'),
+(3, 3, 'grd3', 'grd3', 'grd4'),
+(4, 4, 'grd4', 'grd4', 'grd5'),
+(5, 5, 'grd5', 'grd5', 'grd6'),
+(6, 6, 'grd6', 'grd6', 'grd7'),
+(7, 7, 'grd7', 'grd7', 'grd8'),
+(8, 8, 'grd8', 'grd8', 'grd9'),
+(9, 9, 'grd9', 'grd9', 'none');
 
 -- --------------------------------------------------------
 
@@ -291,7 +195,8 @@ INSERT INTO `students` (`id`, `name`, `index_no`, `grade`, `class`, `language`, 
 (23, '', '', '', '', '', '2023-01-26'),
 (24, '', '', '', '', '', '2023-01-26'),
 (25, '', '', '', '', '', '2023-01-26'),
-(26, 'dsaf', '123', 'grd4', 'F', 's', '2023-02-12');
+(26, 'dsaf', '123', 'grd4', 'F', 's', '2023-02-12'),
+(27, 'sas', '123', 'grd1', 'C', 's', '2023-02-19');
 
 -- --------------------------------------------------------
 
@@ -306,6 +211,7 @@ CREATE TABLE `teachers` (
   `password` text NOT NULL,
   `img` text NOT NULL,
   `role` text NOT NULL,
+  `grade` text NOT NULL,
   `added_date` text NOT NULL,
   `last_login` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -314,10 +220,10 @@ CREATE TABLE `teachers` (
 -- Dumping data for table `teachers`
 --
 
-INSERT INTO `teachers` (`id`, `name`, `username`, `password`, `img`, `role`, `added_date`, `last_login`) VALUES
-(1, 'Main Admin ', 'main-admin', '12345', 'main-default.png', 'main-admin', '', '1676821118'),
-(4, 'Admin 1', 'admin1', '123', 'default.png', 'admin', '', '1676821118'),
-(5, 'Admin 2', 'admin2', '123', 'default.png', 'admin', '', '1674794690');
+INSERT INTO `teachers` (`id`, `name`, `username`, `password`, `img`, `role`, `grade`, `added_date`, `last_login`) VALUES
+(1, 'Main Admin ', 'main-admin', '12345', 'main-default.png', 'main-admin', 'all', '', '1680252529'),
+(4, 'Admin 1', 'admin1', '123', 'default.png', 'admin', 'grd1', '', '1679326421'),
+(5, 'Admin 2', 'admin2', '123', 'default.png', 'admin', 'grd2', '', '1674794690');
 
 -- --------------------------------------------------------
 
@@ -343,7 +249,8 @@ INSERT INTO `will_give_books` (`id`, `book_id`, `stu_id`, `book_grade`, `give`) 
 (3, '3', '1', 'grd2', '1'),
 (4, '5', '15', 'grd1', '1'),
 (5, '5', '11', 'grd1', '1'),
-(6, '5', '18', 'grd1', '0');
+(6, '5', '18', 'grd1', '0'),
+(7, '6', '27', 'grd1', '1');
 
 -- --------------------------------------------------------
 
@@ -366,7 +273,8 @@ CREATE TABLE `will_take_books` (
 INSERT INTO `will_take_books` (`id`, `book_id`, `stu_id`, `book_grade`, `take`) VALUES
 (1, '2', '1', 'grd2', '1'),
 (2, '3', '1', 'grd2', '1'),
-(3, '1', '1', 'grd2', '1');
+(3, '1', '1', 'grd2', '1'),
+(4, '6', '27', 'grd1', '0');
 
 --
 -- Indexes for dumped tables
@@ -379,63 +287,21 @@ ALTER TABLE `available_grades`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `book_stock`
+--
+ALTER TABLE `book_stock`
+  ADD PRIMARY KEY (`book_id`);
+
+--
 -- Indexes for table `chat`
 --
 ALTER TABLE `chat`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `grd1_books`
+-- Indexes for table `grade_connections`
 --
-ALTER TABLE `grd1_books`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `grd2_books`
---
-ALTER TABLE `grd2_books`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `grd3_books`
---
-ALTER TABLE `grd3_books`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `grd4_books`
---
-ALTER TABLE `grd4_books`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `grd5_books`
---
-ALTER TABLE `grd5_books`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `grd6_books`
---
-ALTER TABLE `grd6_books`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `grd7_books`
---
-ALTER TABLE `grd7_books`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `grd8_books`
---
-ALTER TABLE `grd8_books`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `grd9_books`
---
-ALTER TABLE `grd9_books`
+ALTER TABLE `grade_connections`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -473,88 +339,46 @@ ALTER TABLE `available_grades`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `book_stock`
+--
+ALTER TABLE `book_stock`
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `chat`
 --
 ALTER TABLE `chat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=320;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=345;
 
 --
--- AUTO_INCREMENT for table `grd1_books`
+-- AUTO_INCREMENT for table `grade_connections`
 --
-ALTER TABLE `grd1_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `grd2_books`
---
-ALTER TABLE `grd2_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `grd3_books`
---
-ALTER TABLE `grd3_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `grd4_books`
---
-ALTER TABLE `grd4_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `grd5_books`
---
-ALTER TABLE `grd5_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `grd6_books`
---
-ALTER TABLE `grd6_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `grd7_books`
---
-ALTER TABLE `grd7_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `grd8_books`
---
-ALTER TABLE `grd8_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `grd9_books`
---
-ALTER TABLE `grd9_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+ALTER TABLE `grade_connections`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `will_give_books`
 --
 ALTER TABLE `will_give_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `will_take_books`
 --
 ALTER TABLE `will_take_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
