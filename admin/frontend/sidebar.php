@@ -1,0 +1,191 @@
+<?php
+if (isset($_SESSION['u_id'])) {
+    include('../control/db/conn.php')
+?>
+    <?php
+    $uid = $_SESSION['u_id'];
+    $user_data = "SELECT * FROM teachers WHERE id='$uid'";
+    $user_data_run = mysqli_query($conn, $user_data);
+    while ($row = $user_data_run->fetch_assoc()) {
+        $user_role = $row["role"];
+        $user_img = $row["img"];
+    }
+
+    $site_data = "SELECT * FROM book_site_data WHERE id='1'";
+    $site_data_run = mysqli_query($conn, $site_data);
+    while ($site_datas2 = $site_data_run->fetch_assoc()) {
+        $site_name = $site_datas2['name'];
+    }
+    ?>
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="index3.html" class="brand-link">
+            <img src="../admin/site_images/<?= $site_logo ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light"><?= $site_name ?></span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="../admin/site_images/u_images/<?= $user_img ?>" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                    <a href="#" class="d-block"><?= $_SESSION['name'] ?>(<?= $user_role ?>)</a>
+                </div>
+            </div>
+
+            <!-- SidebarSearch Form -->
+            <div class="form-inline">
+                <div class="input-group" data-widget="sidebar-search">
+                    <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-sidebar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+                    <li class="nav-item">
+                        <a href="home.php" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dashboard
+                                <!-- <span class="badge badge-info right">2</span> -->
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="chat.php" class="nav-link">
+                            <i class="nav-icon fas fa-comment"></i>
+                            <p id="chat_unview_msgs">
+                                Chat
+
+                            </p>
+                        </a>
+                    </li>
+
+                    <?php
+                    $admin_id = $_SESSION['u_id'];
+                    $admin_ch = "SELECT * FROM teachers WHERE id='$admin_id'";
+                    $admin_ch_run = mysqli_query($conn, $admin_ch);
+                    while ($ch_data = $admin_ch_run->fetch_assoc()) {
+                        if ($ch_data['role'] == 'main-admin') {
+                    ?>
+                            <li class="nav-header">SITE EDIT</li>
+                            <li class="nav-item">
+                                <a href="site_edit.php" class="nav-link">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Site Data
+                                        <!-- <span class="badge badge-info right">2</span> -->
+                                    </p>
+                                </a>
+                            </li>
+                    <?php
+                        }
+                    }
+                    ?>
+
+                    <?php
+                    $data = [];
+                    $grade_data = "SELECT * FROM available_grades ORDER BY id DESC";
+                    $grade_data_run = mysqli_query($conn, $grade_data);
+                    while ($link_row = mysqli_fetch_assoc($grade_data_run)) {
+                        $data = $link_row['value'];
+                    }
+                    ?>
+                    <li class="nav-header">BOOK DETAILS</li>
+                    <li class="nav-item">
+                        <a href="book_stock.php?grade=<?= $data ?>" class="nav-link">
+                            <i class="nav-icon fas fa-solid fa-book"></i>
+                            <p>
+                                Book Stock
+                                <!-- <span class="badge badge-info right">2</span> -->
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-header">STUDENT DETAILS</li>
+                    <li class="nav-item">
+                        <a href="students.php?grade=<?= $data ?>" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Students
+                                <!-- <span class="badge badge-info right">2</span> -->
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="give_books.php?grade=<?= $data ?>" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>
+                                Give Book For Students
+                                <!-- <span class="badge badge-info right">2</span> -->
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="take_books.php?grade=<?= $data ?>" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>
+                                Take Book From Students
+                                <!-- <span class="badge badge-info right">2</span> -->
+                            </p>
+                        </a>
+                    </li>
+
+                    <?php
+                    $admin_id = $_SESSION['u_id'];
+                    $admin_ch = "SELECT * FROM teachers WHERE id='$admin_id'";
+                    $admin_ch_run = mysqli_query($conn, $admin_ch);
+                    while ($ch_data = $admin_ch_run->fetch_assoc()) {
+                        if ($ch_data['role'] == 'main-admin') {
+                    ?>
+                            <li class="nav-header">ADMIN DETAILS</li>
+                            <li class="nav-item">
+                                <a href="admins.php" class="nav-link">
+                                    <i class="nav-icon fas fa-user-shield"></i>
+                                    <p>
+                                        Admins
+                                        <!-- <span class="badge badge-info right">2</span> -->
+                                    </p>
+                                </a>
+                            </li>
+                    <?php
+                        }
+                    }
+                    ?>
+
+                    <li class="nav-item">
+                        <a href="./admin-control/logout.php" class="nav-link">
+                            <i class="nav-icon fas fa-sign-out-alt text-bold"></i>
+                            <p>
+                                Logout
+                                <!-- <span class="badge badge-info right">2</span> -->
+                            </p>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+<?php
+} else {
+    header('Location: ../index.php');
+}
+?>
