@@ -5,9 +5,7 @@ if (isset($_POST['get_table_data'])) {
 
     $grade = $_POST['grade'];
 
-    $grade_table = $grade . '_books';
-
-    $get_book_data = "SELECT * FROM " . $grade_table . " ORDER BY gv_id";
+    $get_book_data = "SELECT * FROM book_stock WHERE book_grade='$grade'";
     $get_book_data_run = mysqli_query($conn, $get_book_data);
     $data = array();
     $no = 1;
@@ -17,13 +15,13 @@ if (isset($_POST['get_table_data'])) {
                 foreach ($get_book_data_run as $book) {
                     $no++;
                     $row = array();
-                    $row[] = $book['gv_id'];
+                    $row[] = $book['book_serial_id'];
                     $row[] = $book['book_name'];
-                    $row[] = $book['language'];
-                    $row[] = $book['total_stu'];
-                    $row[] = $book['ex_requests'];
+                    $row[] = $book['book_language'];
+                    $row[] = $book['studing_students'];
+                    $row[] = $book['extra_requests'];
                     $row[] = $book['leftover_books'];
-                    $row[] = $book["id"];
+                    $row[] = $book["book_id"];
                     $data[] = $row;
                 }
             }
@@ -40,11 +38,9 @@ if (isset($_POST['get_table_data'])) {
 
 if (isset($_POST['get_edit_stock_data'])) {
 
-    $grade = $_POST['stock_table'];
-    $grade_table = $grade . '_books';
     $stock_id = $_POST['stock_id'];
 
-    $get_book_data_modal = "SELECT * FROM " . $grade_table . " WHERE id='$stock_id'";
+    $get_book_data_modal = "SELECT * FROM book_stock WHERE book_id='$stock_id'";
     $get_book_data_modal_run = mysqli_query($conn, $get_book_data_modal);
 
     if ($get_book_data_modal_run) {
@@ -66,8 +62,6 @@ if (isset($_POST['get_edit_stock_data'])) {
 
 if (isset($_POST['edit_data'])) {
 
-    $stock_table = $_POST['stock_table'];
-    $grade_table = $stock_table . '_books';
     $book_stock_id = $_POST['book_stock_id'];
 
     $s_id = $_POST['s_id'];
@@ -78,7 +72,7 @@ if (isset($_POST['edit_data'])) {
     $book_extra_requests = $_POST['book_extra_requests'];
     $book_total = $_POST['book_total'];
 
-    $update_stock = "UPDATE " . $grade_table . " SET book_name='$book_name',gv_id='$s_id',language='$book_language',total_stu='$book_study_students',leftover_books='$book_leftover',ex_requests='$book_extra_requests',total_books='$book_total' WHERE id='$book_stock_id'";
+    $update_stock = "UPDATE book_stock SET book_name='$book_name',book_serial_id='$s_id',book_language='$book_language',studing_students='$book_study_students',leftover_books='$book_leftover',extra_requests='$book_extra_requests',total_books='$book_total' WHERE book_id='$book_stock_id'";
     $update_stock_run = mysqli_query($conn, $update_stock);
 
     if ($update_stock_run) {
@@ -100,7 +94,6 @@ if (isset($_POST['edit_data'])) {
 if (isset($_POST['add_data'])) {
 
     $stock_table = $_POST['stock_table'];
-    $grade_table = $stock_table . '_books';
 
     $s_id = $_POST['s_id'];
     $book_name = $_POST['book_name'];
@@ -110,7 +103,7 @@ if (isset($_POST['add_data'])) {
     $book_extra_requests = $_POST['book_extra_requests'];
     $book_total = $_POST['book_total'];
 
-    $add_stock = "INSERT INTO " . $grade_table . " (book_name, gv_id, language, total_stu, leftover_books, ex_requests, total_books) VALUES ('$book_name','$s_id','$book_language','$book_study_students','$book_leftover','$book_extra_requests','$book_total')";
+    $add_stock = "INSERT INTO book_stock (book_serial_id, book_name, book_language, book_grade, studing_students, leftover_books, extra_requests, total_books) VALUES ('$s_id','$book_name','$book_language','$stock_table','$book_study_students','$book_leftover','$book_extra_requests','$book_total')";
     $add_stock_run = mysqli_query($conn, $add_stock);
 
     if ($add_stock_run) {
@@ -132,10 +125,8 @@ if (isset($_POST['add_data'])) {
 if (isset($_POST['delete_stock'])) {
 
     $stock_id = $_POST['stock_id'];
-    $stock_table = $_POST['stock_table'];
-    $grade_table = $stock_table . '_books';
 
-    $delete_stock = "DELETE FROM " . $grade_table . " WHERE id='$stock_id'";
+    $delete_stock = "DELETE FROM book_stock WHERE book_id='$stock_id'";
     $delete_stock_run = mysqli_query($conn, $delete_stock);
 
     if ($delete_stock_run) {

@@ -20,9 +20,9 @@ if (isset($_SESSION['u_id'])) {
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
-            <img src="../admin/site_images/<?= $site_logo ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light"><?= $site_name ?></span>
+        <a href="index3.html" class="brand-link" style="text-decoration: none;">
+            <img src="../admin/site_images/<?= $site_logo ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8;"><br>
+            <span class="brand-text font-weight-light" style="width: 50px;"><?= $site_name ?></span>
         </a>
 
         <!-- Sidebar -->
@@ -33,7 +33,7 @@ if (isset($_SESSION['u_id'])) {
                     <img src="../admin/site_images/u_images/<?= $user_img ?>" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block"><?= $_SESSION['name'] ?>(<?= $user_role ?>)</a>
+                    <a href="#" class="d-block" style="text-decoration: none;"><?= $_SESSION['name'] ?>(<?= $user_role ?>)</a>
                 </div>
             </div>
 
@@ -50,7 +50,7 @@ if (isset($_SESSION['u_id'])) {
             </div>
 
             <!-- Sidebar Menu -->
-            <nav class="mt-2">
+            <nav class="mt-3">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -75,39 +75,24 @@ if (isset($_SESSION['u_id'])) {
                         </a>
                     </li>
 
-                    <?php
-                    $admin_id = $_SESSION['u_id'];
-                    $admin_ch = "SELECT * FROM teachers WHERE id='$admin_id'";
-                    $admin_ch_run = mysqli_query($conn, $admin_ch);
-                    while ($ch_data = $admin_ch_run->fetch_assoc()) {
-                        if ($ch_data['role'] == 'main-admin') {
-                    ?>
-                            <li class="nav-header">SITE EDIT</li>
-                            <li class="nav-item">
-                                <a href="site_edit.php" class="nav-link">
-                                    <i class="nav-icon fas fa-circle"></i>
-                                    <p>
-                                        Site Data
-                                        <!-- <span class="badge badge-info right">2</span> -->
-                                    </p>
-                                </a>
-                            </li>
-                    <?php
-                        }
-                    }
-                    ?>
+                    <li class="nav-header">SITE EDIT</li>
+                    <li class="nav-item">
+                        <a href="site_edit.php" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>
+                                Site Data
+                                <!-- <span class="badge badge-info right">2</span> -->
+                            </p>
+                        </a>
+                    </li>
 
-                    <?php
-                    $data = [];
-                    $grade_data = "SELECT * FROM available_grades ORDER BY id DESC";
-                    $grade_data_run = mysqli_query($conn, $grade_data);
-                    while ($link_row = mysqli_fetch_assoc($grade_data_run)) {
-                        $data = $link_row['value'];
-                    }
-                    ?>
+
+                    <input type="hidden" id="admin_grade_inp" value="<= $admin_grd ?>">
+
+
                     <li class="nav-header">BOOK DETAILS</li>
                     <li class="nav-item">
-                        <a href="book_stock.php?grade=<?= $data ?>" class="nav-link">
+                        <a href="book_stock.php" class="nav-link">
                             <i class="nav-icon fas fa-solid fa-book"></i>
                             <p>
                                 Book Stock
@@ -118,7 +103,7 @@ if (isset($_SESSION['u_id'])) {
 
                     <li class="nav-header">STUDENT DETAILS</li>
                     <li class="nav-item">
-                        <a href="students.php?grade=<?= $data ?>" class="nav-link">
+                        <a href="students.php?grade=<= $data ?>" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
                                 Students
@@ -126,8 +111,9 @@ if (isset($_SESSION['u_id'])) {
                             </p>
                         </a>
                     </li>
+
                     <li class="nav-item">
-                        <a href="give_books.php?grade=<?= $data ?>" class="nav-link">
+                        <a href="give_books.php?grade=<= $data ?>" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
                                 Give Book For Students
@@ -136,7 +122,7 @@ if (isset($_SESSION['u_id'])) {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="take_books.php?grade=<?= $data ?>" class="nav-link">
+                        <a href="take_books.php?grade=<= $data ?>" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
                                 Take Book From Students
@@ -145,27 +131,25 @@ if (isset($_SESSION['u_id'])) {
                         </a>
                     </li>
 
-                    <?php
-                    $admin_id = $_SESSION['u_id'];
-                    $admin_ch = "SELECT * FROM teachers WHERE id='$admin_id'";
-                    $admin_ch_run = mysqli_query($conn, $admin_ch);
-                    while ($ch_data = $admin_ch_run->fetch_assoc()) {
-                        if ($ch_data['role'] == 'main-admin') {
-                    ?>
-                            <li class="nav-header">ADMIN DETAILS</li>
-                            <li class="nav-item">
-                                <a href="admins.php" class="nav-link">
-                                    <i class="nav-icon fas fa-user-shield"></i>
-                                    <p>
-                                        Admins
-                                        <!-- <span class="badge badge-info right">2</span> -->
-                                    </p>
-                                </a>
-                            </li>
-                    <?php
-                        }
-                    }
-                    ?>
+                    <li class="nav-header">ADMIN DETAILS</li>
+                    <li class="nav-item">
+                        <a href="admins.php" class="nav-link">
+                            <i class="nav-icon fas fa-user-shield"></i>
+                            <p>
+                                Admins
+                                <!-- <span class="badge badge-info right">2</span> -->
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="grade_connection.php" class="nav-link">
+                            <i class="nav-icon fas fa-solid fa-network-wired"></i>
+                            <p>
+                                Grade Connection
+                                <!-- <span class="badge badge-info right">2</span> -->
+                            </p>
+                        </a>
+                    </li>
 
                     <li class="nav-item">
                         <a href="./admin-control/logout.php" class="nav-link">
@@ -176,6 +160,9 @@ if (isset($_SESSION['u_id'])) {
                             </p>
                         </a>
                     </li>
+
+                    <div style="margin-bottom: 100px;"></div>
+
 
                 </ul>
             </nav>

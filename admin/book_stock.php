@@ -21,7 +21,7 @@ if (isset($_SESSION['u_id'])) {
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a class="nav-link text-primary" href="#">Home</a></li>
                             <li class="breadcrumb-item active">Book Stock</li>
                         </ol>
                     </div><!-- /.col -->
@@ -30,17 +30,17 @@ if (isset($_SESSION['u_id'])) {
         </div>
         <!-- /.content-header -->
 
-        <?php
-        if (isset($_GET['grade'])) {
-        ?>
+        <!-- <?php
+                if (isset($_GET['grade'])) {
+                ?>
             <input type="hidden" value="1" id="check_if_grade">
         <?php
-        } else {
+                } else {
         ?>
             <input type="hidden" value="0" id="check_if_grade">
         <?php
-        }
-        ?>
+                }
+        ?> -->
 
         <!-- Main content -->
         <section class="content">
@@ -48,31 +48,24 @@ if (isset($_SESSION['u_id'])) {
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="row">
-                            <div class="col-md-1">
-                                <h3 class="card-title">Book Stock</h3>
-                            </div>
-                            <div class="col-md-3">
-                                <select id="grades" class="form-control">
-                                    <option value="0" disabled selected>Select Grade</option>
-                                    <?php
-                                    $grade_data = "SELECT * FROM available_grades";
-                                    $grade_data_run = mysqli_query($conn, $grade_data);
-                                    $i = 1;
-                                    foreach ($grade_data_run as $grade) {
-                                    ?>
-                                        <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
+                        <h3 class="card-title">Book Stock Details</h3>
+                        <div class="col-md-3 float-end">
+                            <select id="table_data_grade" class="form-control mb-2">
+                                <?php
+                                $grade_data = "SELECT * FROM available_grades";
+                                $grade_data_run = mysqli_query($conn, $grade_data);
+                                $i = 1;
+                                foreach ($grade_data_run as $grade) {
+                                ?>
+                                    <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
 
-                                    <?php
-                                        $i = $i + 1;
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="col-md-8">
-                                <button class="btn btn-primary float-end" id="add_new_stock" onclick="add_modal()">Add New Stock</button>
-                            </div>
+                                <?php
+                                    $i = $i + 1;
+                                }
+                                ?>
+                            </select>
                         </div>
+                        <button class="btn btn-primary float-end" id="add_new_stock" onclick="add_modal()">Add New Stock</button>
                     </div>
 
                     <!-- /.card-header -->
@@ -206,11 +199,11 @@ if (isset($_SESSION['u_id'])) {
                     </div>
                     <div class="form-group">
                         <label for="">Serial ID</label>
-                        <input type="text" id="add_s_id" class="form-control">
+                        <input type="text" id="add_s_id" class="form-control" placeholder="Enter Serial ID">
                     </div>
                     <div class="form-group">
                         <label for="">Book Name</label>
-                        <input type="text" id="add_book_name" class="form-control">
+                        <input type="text" id="add_book_name" class="form-control" placeholder="Enter Book Name">
                     </div>
                     <div class="form-group">
                         <label for="">Book Language</label>
@@ -224,11 +217,11 @@ if (isset($_SESSION['u_id'])) {
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="">Studing Students Count</label>
-                                <input type="text" id="add_book_study_students" class="form-control">
+                                <input type="text" id="add_book_study_students" class="form-control" placeholder="Enter Studing Students">
                             </div>
                             <div class="col-md-6">
                                 <label for="">Leftover Books</label>
-                                <input type="text" id="add_book_leftover" class="form-control">
+                                <input type="text" id="add_book_leftover" class="form-control" placeholder="Enter Leftover Books">
                             </div>
                         </div>
                     </div>
@@ -236,11 +229,11 @@ if (isset($_SESSION['u_id'])) {
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="">Extra Requests</label>
-                                <input type="text" id="add_book_extra_requests" class="form-control">
+                                <input type="text" id="add_book_extra_requests" class="form-control" placeholder="Enter Extra Books">
                             </div>
                             <div class="col-md-6">
                                 <label for="">Total Books</label>
-                                <input type="text" id="add_book_total" class="form-control">
+                                <input type="text" id="add_book_total" class="form-control" placeholder="Enter Total Books">
                             </div>
                         </div>
                     </div>
@@ -286,16 +279,26 @@ if (isset($_SESSION['u_id'])) {
 
 <script>
     var table;
+
     $(document).ready(function() {
 
-        $('#grades').on('change', function() {
-            window.location.href = 'book_stock.php?grade=' + $('#grades').val(); + '';
+        var table_data = {
+            get_table_data: true,
+            grade: $('#table_data_grade').val(),
+        }
+        load_table(table_data)
+        $('#table_data_grade').on('change', function() {
+            var table_data = {
+                get_table_data: true,
+                grade: $('#table_data_grade').val(),
+            }
+            load_table(table_data)
         });
 
-        if (getUrlParameter('grade')) {
-            $('#grades').val(getUrlParameter('grade'));
-        }
+    });
 
+    function load_table(table_data) {
+        $('#book_stock_table').DataTable().clear().destroy();
         table = $("#book_stock_table").DataTable({
             "responsive": true,
             "autoWidth": false,
@@ -310,10 +313,7 @@ if (isset($_SESSION['u_id'])) {
             "ajax": {
                 "url": "admin-control/book-stock.php",
                 "type": "POST",
-                "data": {
-                    get_table_data: true,
-                    grade: getUrlParameter('grade')
-                }
+                "data": table_data,
             },
             //Set column definition initialisation properties.
             "columnDefs": [{
@@ -334,15 +334,13 @@ if (isset($_SESSION['u_id'])) {
                 },
             ],
         });
-
-    });
+    }
 
     function get_edit_stock_data(id) {
 
         var data = {
             get_edit_stock_data: true,
             stock_id: id,
-            stock_table: getUrlParameter('grade'),
         };
 
         $.ajax({
@@ -351,15 +349,15 @@ if (isset($_SESSION['u_id'])) {
             data: data,
             success: function(response) {
                 var res = jQuery.parseJSON(response);
-                // console.log(res.data.book_name);
-                $('#edit_s_id').val(res.data.gv_id);
+                // console.log(response);
+                $('#edit_s_id').val(res.data.book_serial_id);
                 $('#edit_book_name').val(res.data.book_name);
-                $('#edit_book_language option[value=' + res.data.language + ']').attr('selected', 'selected');
-                $('#edit_book_study_students').val(res.data.total_stu);
+                $('#edit_book_language option[value=' + res.data.book_language + ']').attr('selected', 'selected');
+                $('#edit_book_study_students').val(res.data.studing_students);
                 $('#edit_book_leftover').val(res.data.leftover_books);
-                $('#edit_book_extra_requests').val(res.data.ex_requests);
+                $('#edit_book_extra_requests').val(res.data.extra_requests);
                 $('#edit_book_total').val(res.data.total_books);
-                $('#edit_book_stock_id').val(res.data.id);
+                $('#edit_book_stock_id').val(res.data.book_id);
 
                 $('#edit_data_modal').modal('show');
             }
@@ -372,7 +370,6 @@ if (isset($_SESSION['u_id'])) {
             // console.log('success');
             var data = {
                 edit_data: true,
-                stock_table: getUrlParameter('grade'),
                 s_id: $('#edit_s_id').val(),
                 book_name: $('#edit_book_name').val(),
                 book_language: $('#edit_book_language :selected').val(),

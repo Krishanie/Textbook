@@ -29,6 +29,7 @@ if (isset($_SESSION['u_id'])) {
         <link rel="stylesheet" href="assets/icheck-bootstrap/icheck-bootstrap.min.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
         <!-- overlayScrollbars -->
         <link rel="stylesheet" href="assets/overlayScrollbars/css/OverlayScrollbars.min.css">
         <!-- DataTables -->
@@ -54,8 +55,8 @@ if (isset($_SESSION['u_id'])) {
 
                 <!-- Right navbar links -->
                 <!-- <ul class="navbar-nav ml-auto"> -->
-                    <!-- Navbar Search -->
-                    <!-- <select id="full_site_lang" class="form-control">
+                <!-- Navbar Search -->
+                <!-- <select id="full_site_lang" class="form-control">
                         <option value="eng" selected>ENG</option>
                         <option value="sin">SIN</option>
                     </select> -->
@@ -63,8 +64,18 @@ if (isset($_SESSION['u_id'])) {
             </nav>
             <!-- /.navbar -->
 
+            <!-- Get First Grade Only -->
+            <?php
+            $grade_data = "SELECT * FROM available_grades ORDER BY id DESC";
+            $grade_data_run = mysqli_query($conn, $grade_data);
+            while ($link_row = mysqli_fetch_assoc($grade_data_run)) {
+                $first_grade_only = $link_row['value'];
+            }
+            ?>
+            <input type="hidden" id="first_grade_only" value="<?= $first_grade_only ?>">
 
 
+            
             <input type="hidden" id="msg_view_count">
 
 
