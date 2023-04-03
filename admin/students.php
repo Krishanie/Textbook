@@ -149,18 +149,29 @@ if (isset($_SESSION['u_id'])) {
                                 <label for="">Grade</label>
                                 <select id="edit_student_grade" class="form-control">
                                     <option value="0" disabled selected>Select Grade</option>
-                                    <?php
-                                    $grade_data = "SELECT * FROM available_grades";
-                                    $grade_data_run = mysqli_query($conn, $grade_data);
+                                <?php
+                                $grade_data = "SELECT * FROM available_grades";
+                                $grade_data_run = mysqli_query($conn, $grade_data);
+                                if ($user_grade == 'all') {
                                     $i = 1;
                                     foreach ($grade_data_run as $grade) {
-                                    ?>
+                                ?>
                                         <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
 
                                     <?php
                                         $i = $i + 1;
                                     }
+                                } else {
+                                    $grade_data_name = "SELECT * FROM available_grades WHERE value='$user_grade'";
+                                    $grade_data_name_run = mysqli_query($conn, $grade_data_name);
+                                    while ($grd_n = $grade_data_name_run->fetch_assoc()) {
+                                        $user_grade_name = $grd_n['grade'];
+                                    }
                                     ?>
+                                    <option value="<?= $user_grade ?>"><?= $user_grade_name ?></option>
+                                <?php
+                                }
+                                ?>ෆ
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -213,18 +224,29 @@ if (isset($_SESSION['u_id'])) {
                                 <label for="">Select Grade</label>
                                 <select id="add_student_grade" class="form-control mb-2">
                                     <option value="0" selected disabled>Select Grade</option>
-                                    <?php
-                                    $grade_data = "SELECT * FROM available_grades";
-                                    $grade_data_run = mysqli_query($conn, $grade_data);
+                                <?php
+                                $grade_data = "SELECT * FROM available_grades";
+                                $grade_data_run = mysqli_query($conn, $grade_data);
+                                if ($user_grade == 'all') {
                                     $i = 1;
                                     foreach ($grade_data_run as $grade) {
-                                    ?>
+                                ?>
                                         <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
 
                                     <?php
                                         $i = $i + 1;
                                     }
+                                } else {
+                                    $grade_data_name = "SELECT * FROM available_grades WHERE value='$user_grade'";
+                                    $grade_data_name_run = mysqli_query($conn, $grade_data_name);
+                                    while ($grd_n = $grade_data_name_run->fetch_assoc()) {
+                                        $user_grade_name = $grd_n['grade'];
+                                    }
                                     ?>
+                                    <option value="<?= $user_grade ?>"><?= $user_grade_name ?></option>
+                                <?php
+                                }
+                                ?>
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -263,13 +285,24 @@ if (isset($_SESSION['u_id'])) {
                                 <?php
                                 $grade_data = "SELECT * FROM available_grades";
                                 $grade_data_run = mysqli_query($conn, $grade_data);
-                                $i = 1;
-                                foreach ($grade_data_run as $grade) {
+                                if ($user_grade == 'all') {
+                                    $i = 1;
+                                    foreach ($grade_data_run as $grade) {
                                 ?>
-                                    <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
+                                        <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
 
+                                    <?php
+                                        $i = $i + 1;
+                                    }
+                                } else {
+                                    $grade_data_name = "SELECT * FROM available_grades WHERE value='$user_grade'";
+                                    $grade_data_name_run = mysqli_query($conn, $grade_data_name);
+                                    while ($grd_n = $grade_data_name_run->fetch_assoc()) {
+                                        $user_grade_name = $grd_n['grade'];
+                                    }
+                                    ?>
+                                    <option value="<?= $user_grade ?>"><?= $user_grade_name ?></option>
                                 <?php
-                                    $i = $i + 1;
                                 }
                                 ?>
                             </select>
