@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2023 at 05:54 PM
+-- Generation Time: Apr 03, 2023 at 05:56 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `textbook_issuing_system_new_version`
+-- Database: `textbook-issue-system`
 --
 
 -- --------------------------------------------------------
@@ -66,7 +66,7 @@ CREATE TABLE `book_site_data` (
 --
 
 INSERT INTO `book_site_data` (`id`, `name`, `title`, `logo`) VALUES
-(1, 'Text Book Issuing System', 'Defence Services College', 'site_logo-63ce34f1266b41.18466967.png');
+(1, 'Text Book Issuing System', 'Defence Services College', 'site_logo-642ae3859bfdd5.99703378.png');
 
 -- --------------------------------------------------------
 
@@ -226,9 +226,37 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`id`, `name`, `username`, `password`, `img`, `role`, `grade`, `lang`, `added_date`, `last_login`) VALUES
-(1, 'Vibodha Sasmitha', 'main-admin', '12345', 'main-default.png', 'main-admin', 'all', 'sin', '', '1680252529'),
+(1, 'Vibodha Sasmitha', 'main-admin', '12345', 'main-default.png', 'main-admin', 'all', 'en', '', '1680252529'),
 (4, 'Admin 1', 'admin1', '123', 'default.png', 'admin', 'grd1', 'en', '', '1679326421'),
 (5, 'Admin 2', 'admin2', '123', 'default.png', 'admin', 'grd2', 'en', '', '1674794690');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `view_pages`
+--
+
+CREATE TABLE `view_pages` (
+  `id` int(11) NOT NULL,
+  `page_name` text NOT NULL,
+  `page_find` text NOT NULL,
+  `page_view` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `view_pages`
+--
+
+INSERT INTO `view_pages` (`id`, `page_name`, `page_find`, `page_view`) VALUES
+(1, 'Dashboard', 'dash', 1),
+(2, 'Site Data', 'sitedata', 1),
+(3, 'Book Stock', 'bookstock', 1),
+(4, 'Students', 'students', 1),
+(5, 'Distribution of books to students', 'distributionbooks', 1),
+(6, 'Take Books From Students', 'takebooks', 1),
+(7, 'Admins', 'admins', 1),
+(8, 'Grade Connections', 'grdconn', 1),
+(9, 'Admin View Pages', 'adminview', 1);
 
 -- --------------------------------------------------------
 
@@ -328,6 +356,12 @@ ALTER TABLE `teachers`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `view_pages`
+--
+ALTER TABLE `view_pages`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `will_give_books`
 --
 ALTER TABLE `will_give_books`
@@ -378,6 +412,12 @@ ALTER TABLE `students`
 --
 ALTER TABLE `teachers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `view_pages`
+--
+ALTER TABLE `view_pages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `will_give_books`
