@@ -30,17 +30,17 @@ if (isset($_SESSION['u_id'])) {
         </div>
         <!-- /.content-header -->
 
-        <?php
-        if (isset($_GET['grade'])) {
-        ?>
+        <!-- <?php
+                if (isset($_GET['grade'])) {
+                ?>
             <input type="hidden" value="1" id="check_if_grade">
         <?php
-        } else {
+                } else {
         ?>
             <input type="hidden" value="0" id="check_if_grade">
         <?php
-        }
-        ?>
+                }
+        ?> -->
 
         <!-- Main content -->
         <section class="content">
@@ -48,27 +48,22 @@ if (isset($_SESSION['u_id'])) {
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="row">
-                            <div class="col-md-1">
-                                <h3 class="card-title">Take Book Details</h3>
-                            </div>
-                            <div class="col-md-3">
-                                <select id="grades" class="form-control">
-                                    <option value="0" disabled selected>Select Grade</option>
-                                    <?php
-                                    $grade_data = "SELECT * FROM available_grades";
-                                    $grade_data_run = mysqli_query($conn, $grade_data);
-                                    $i = 1;
-                                    foreach ($grade_data_run as $grade) {
-                                    ?>
-                                        <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
+                        <h3 class="card-title">Take Books From Students | සිසුන්ගෙන් පොත් භාර ගැනීම.</h3>
+                        <div class="col-md-3 float-end">
+                            <select id="table_data_grade" class="form-control mb-2">
+                                <?php
+                                $grade_data = "SELECT * FROM available_grades";
+                                $grade_data_run = mysqli_query($conn, $grade_data);
+                                $i = 1;
+                                foreach ($grade_data_run as $grade) {
+                                ?>
+                                    <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
 
-                                    <?php
-                                        $i = $i + 1;
-                                    }
-                                    ?>
-                                </select>
-                            </div>
+                                <?php
+                                    $i = $i + 1;
+                                }
+                                ?>
+                            </select>
                         </div>
                     </div>
 
@@ -122,7 +117,7 @@ if (isset($_SESSION['u_id'])) {
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="book_data_stu_id">
-                    <div id="student_book_table" class="row row-cols-6 row-cols-lg-6 g-2 g-lg-1 d-flex justify-content-center">
+                    <div id="student_book_table" class="row row-cols-12 row-cols-lg-8 g-2 g-lg-1 d-flex justify-content-center">
 
 
                     </div>
@@ -166,14 +161,23 @@ if (isset($_SESSION['u_id'])) {
     var table;
     $(document).ready(function() {
 
-        $('#grades').on('change', function() {
-            window.location.href = 'take_books.php?grade=' + $('#grades').val(); + '';
+        var table_data = {
+            get_table_data: true,
+            grade: $('#table_data_grade').val(),
+        }
+        load_table(table_data)
+        $('#table_data_grade').on('change', function() {
+            var table_data = {
+                get_table_data: true,
+                grade: $('#table_data_grade').val(),
+            }
+            load_table(table_data)
         });
 
-        if (getUrlParameter('grade')) {
-            $('#grades').val(getUrlParameter('grade'));
-        }
+    });
 
+    function load_table(table_data) {
+        $('#students_table').DataTable().clear().destroy();
         table = $("#students_table").DataTable({
             "responsive": true,
             "autoWidth": false,
@@ -188,10 +192,7 @@ if (isset($_SESSION['u_id'])) {
             "ajax": {
                 "url": "admin-control/take-books.php",
                 "type": "POST",
-                "data": {
-                    get_table_data: true,
-                    grade: getUrlParameter('grade')
-                }
+                "data": table_data,
             },
             //Set column definition initialisation properties.
             "columnDefs": [{
@@ -212,14 +213,13 @@ if (isset($_SESSION['u_id'])) {
                 },
             ],
         });
-
-    });
+    }
 
     function check(id, book_id) {
         $('#overlay_modal').css('display', 'block');
         var data = {
             check_take_book: true,
-            grade: getUrlParameter('grade'),
+            grade: $('#table_data_grade').val(),
             book_id: book_id,
             ch_id: id,
             stu_id: $('#book_data_stu_id').val(),
@@ -246,7 +246,7 @@ if (isset($_SESSION['u_id'])) {
         $('#overlay_modal').css('display', 'block');
         var data = {
             uncheck_take_book: true,
-            grade: getUrlParameter('grade'),
+            grade: $('#table_data_grade').val(),
             book_id: book_id,
             ch_id: id,
             stu_id: $('#book_data_stu_id').val(),
@@ -278,7 +278,7 @@ if (isset($_SESSION['u_id'])) {
 
         var data = {
             get_student_book_data: true,
-            grade: getUrlParameter('grade'),
+            grade: $('#table_data_grade').val(),
             id: id,
         }
 

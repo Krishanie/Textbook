@@ -21,7 +21,7 @@ if (isset($_SESSION['u_id'])) {
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a class="nav-link text-primary" href="#">Home</a></li>
                             <li class="breadcrumb-item active">Admin Details</li>
                         </ol>
                     </div><!-- /.col -->
@@ -36,14 +36,8 @@ if (isset($_SESSION['u_id'])) {
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="row">
-                            <div class="col-md-1">
-                                <h3 class="card-title">Admin Details</h3>
-                            </div>
-                            <div class="col-md-8">
-                                <button class="btn btn-primary float-end" id="add_new_stock" onclick="add_modal()">Add New Admin</button>
-                            </div>
-                        </div>
+                        <h3 class="card-title">Admin Details</h3>
+                        <button class="btn btn-primary float-end" id="add_new_stock" onclick="add_modal()">Add New Admin</button>
                     </div>
 
                     <!-- /.card-header -->
@@ -51,10 +45,11 @@ if (isset($_SESSION['u_id'])) {
                         <div id="err-msg"></div>
                         <table class="table table-striped" id="admins_table">
                             <thead>
-                                <th>Name</th>
-                                <th>Username</th>
-                                <th>Role</th>
-                                <th>Action</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Username</th>
+                                <th class="text-center">Role</th>
+                                <th class="text-center">Grade</th>
+                                <th class="text-center">Action</th>
                             </thead>
                             <tbody>
                                 <!-- <tr>
@@ -108,6 +103,24 @@ if (isset($_SESSION['u_id'])) {
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="">Grade</label>
+                        <select id="edit_admin_grades" class="form-control">
+                            <option value="0" disabled selected>Select Grade</option>
+                            <option value="all">ALL</option>
+                            <?php
+                            $grade_data = "SELECT * FROM available_grades";
+                            $grade_data_run = mysqli_query($conn, $grade_data);
+                            $i = 1;
+                            foreach ($grade_data_run as $grade) {
+                            ?>
+                                <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
+                            <?php
+                                $i = $i + 1;
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="">Password</label>
                         <input type="text" id="edit_password" class="form-control">
                     </div>
@@ -147,6 +160,23 @@ if (isset($_SESSION['u_id'])) {
                             <option value="0" disabled selected>Select Language</option>
                             <option value="main-admin">Main-admin</option>
                             <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Grade</label>
+                        <select id="add_admin_grades" class="form-control">
+                            <option value="0" disabled selected>Select Grade</option>
+                            <?php
+                            $grade_data = "SELECT * FROM available_grades";
+                            $grade_data_run = mysqli_query($conn, $grade_data);
+                            $i = 1;
+                            foreach ($grade_data_run as $grade) {
+                            ?>
+                                <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
+                            <?php
+                                $i = $i + 1;
+                            }
+                            ?>
                         </select>
                     </div>
                     <div class="form-group">
@@ -219,7 +249,7 @@ if (isset($_SESSION['u_id'])) {
             "columnDefs": [{
                 "targets": [-1],
                 "render": function(data, type, row) {
-                    return "<button class=\"btn btn-success btn-sm\" onclick=\"get_edit_admin_data(" + row[4] + ")\">Edit</button><button class=\"btn btn-danger btn-sm\" onclick=\"delete_admin_modal(" + row[4] + ")\">Delete</button>"
+                    return "<div class=\"d-flex justify-content-center\"><button class=\"btn btn-success btn-sm\" onclick=\"get_edit_admin_data(" + row[5] + ")\">Edit</button><button class=\"btn btn-danger btn-sm ml-3\" onclick=\"delete_admin_modal(" + row[5] + ")\">Delete</button></div>"
                 },
             }, ],
         });
@@ -239,12 +269,17 @@ if (isset($_SESSION['u_id'])) {
             data: data,
             success: function(response) {
                 var res = jQuery.parseJSON(response);
-                // console.log(res.data.book_name);
+                console.log(res.data.book_name);
                 $('#edit_admin_id').val(res.data.id);
                 $('#edit_name').val(res.data.name);
                 $('#edit_username').val(res.data.username);
                 $('#edit_password').val(res.data.password);
                 $('#edit_admin_role option[value=' + res.data.role + ']').attr('selected', 'selected');
+                if (res.data.grade == 'all') {
+                    $('#edit_admin_grades option[value="all"]').attr('selected', 'selected');
+                } else {
+                    $('#edit_admin_grades option[value=' + res.data.grade + ']').attr('selected', 'selected');
+                }
 
                 $('#edit_data_modal').modal('show');
             }
@@ -261,6 +296,7 @@ if (isset($_SESSION['u_id'])) {
                 admin_name: $('#edit_name').val(),
                 admin_username: $('#edit_username').val(),
                 admin_role: $('#edit_admin_role :selected').val(),
+                admin_grade: $('#edit_admin_grades :selected').val(),
                 admin_password: $('#edit_password').val(),
             }
 
@@ -288,6 +324,7 @@ if (isset($_SESSION['u_id'])) {
         $('#edit_name').val();
         $('#edit_username').val();
         $('#edit_admin_role option[value=0]').attr('selected', 'selected');
+        $('#edit_admin_grades option[value=0]').attr('selected', 'selected');
         $('#edit_password').val();
 
         $('#add_data_modal').modal('show');
@@ -300,6 +337,7 @@ if (isset($_SESSION['u_id'])) {
                 admin_name: $('#add_name').val(),
                 admin_username: $('#add_username').val(),
                 admin_role: $('#add_admin_role :selected').val(),
+                admin_grade: $('#add_admin_grades :selected').val(),
                 admin_password: $('#add_password').val(),
             }
 
@@ -367,6 +405,8 @@ if (isset($_SESSION['u_id'])) {
             message('warning', '"Username" Field Required!');
         } else if ($('#' + input_n + 'admin_role :selected').val() == 0) {
             message('warning', '"Admin Role" Field Required!');
+        } else if ($('#' + input_n + 'admin_grades :selected').val() == 0) {
+            message('warning', '"Admin Grade" Field Required!');
         } else if ($('#' + input_n + 'password').val() == 0) {
             message('warning', '"Password" Field Required!');
         } else {

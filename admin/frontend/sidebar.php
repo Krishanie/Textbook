@@ -7,6 +7,8 @@ if (isset($_SESSION['u_id'])) {
     $user_data = "SELECT * FROM teachers WHERE id='$uid'";
     $user_data_run = mysqli_query($conn, $user_data);
     while ($row = $user_data_run->fetch_assoc()) {
+        $user_lang = $row["lang"];
+        $user_name = $row["name"];
         $user_role = $row["role"];
         $user_img = $row["img"];
     }
@@ -33,7 +35,7 @@ if (isset($_SESSION['u_id'])) {
                     <img src="../admin/site_images/u_images/<?= $user_img ?>" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block" style="text-decoration: none;"><?= $_SESSION['name'] ?>(<?= $user_role ?>)</a>
+                    <a href="#" class="d-block" style="text-decoration: none;"><?= $user_name ?><br><?= $user_role ?></a>
                 </div>
             </div>
 
@@ -59,7 +61,17 @@ if (isset($_SESSION['u_id'])) {
                         <a href="home.php" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Dashboard
+                                <?php
+                                if ($user_lang == 'en') {
+                                ?>
+                                    Dashboard
+                                <?php
+                                } else {
+                                ?>
+                                    උපකරණ පුවරුව
+                                <?php
+                                }
+                                ?>
                                 <!-- <span class="badge badge-info right">2</span> -->
                             </p>
                         </a>
@@ -69,8 +81,17 @@ if (isset($_SESSION['u_id'])) {
                         <a href="chat.php" class="nav-link">
                             <i class="nav-icon fas fa-comment"></i>
                             <p id="chat_unview_msgs">
-                                Chat
-
+                                <?php
+                                if ($user_lang == 'en') {
+                                ?>
+                                    Chat
+                                <?php
+                                } else {
+                                ?>
+                                    කතාබස්
+                                <?php
+                                }
+                                ?>
                             </p>
                         </a>
                     </li>
@@ -78,9 +99,19 @@ if (isset($_SESSION['u_id'])) {
                     <li class="nav-header">SITE EDIT</li>
                     <li class="nav-item">
                         <a href="site_edit.php" class="nav-link">
-                            <i class="nav-icon fas fa-circle"></i>
+                            <i class="nav-icon fas fa-info-circle"></i>
                             <p>
-                                Site Data
+                                <?php
+                                if ($user_lang == 'en') {
+                                ?>
+                                    Site Data
+                                <?php
+                                } else {
+                                ?>
+                                    අඩවි දත්ත
+                                <?php
+                                }
+                                ?>
                                 <!-- <span class="badge badge-info right">2</span> -->
                             </p>
                         </a>
@@ -95,7 +126,17 @@ if (isset($_SESSION['u_id'])) {
                         <a href="book_stock.php" class="nav-link">
                             <i class="nav-icon fas fa-solid fa-book"></i>
                             <p>
-                                Book Stock
+                                <?php
+                                if ($user_lang == 'en') {
+                                ?>
+                                    Book Stock
+                                <?php
+                                } else {
+                                ?>
+                                    පොත් ගබඩාව
+                                <?php
+                                }
+                                ?>
                                 <!-- <span class="badge badge-info right">2</span> -->
                             </p>
                         </a>
@@ -103,29 +144,59 @@ if (isset($_SESSION['u_id'])) {
 
                     <li class="nav-header">STUDENT DETAILS</li>
                     <li class="nav-item">
-                        <a href="students.php?grade=<= $data ?>" class="nav-link">
+                        <a href="students.php" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
-                                Students
+                                <?php
+                                if ($user_lang == 'en') {
+                                ?>
+                                    Students
+                                <?php
+                                } else {
+                                ?>
+                                    සිසුන්
+                                <?php
+                                }
+                                ?>
                                 <!-- <span class="badge badge-info right">2</span> -->
                             </p>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="give_books.php?grade=<= $data ?>" class="nav-link">
-                            <i class="nav-icon fas fa-circle"></i>
+                        <a href="give_books.php" class="nav-link">
+                            <i class="nav-icon fas fa-redo-alt"></i>
                             <p>
-                                Give Book For Students
+                                <?php
+                                if ($user_lang == 'en') {
+                                ?>
+                                    Give Books For Students
+                                <?php
+                                } else {
+                                ?>
+                                    සිසුන් සඳහා පොත් ලබා දීම
+                                <?php
+                                }
+                                ?>
                                 <!-- <span class="badge badge-info right">2</span> -->
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="take_books.php?grade=<= $data ?>" class="nav-link">
-                            <i class="nav-icon fas fa-circle"></i>
+                        <a href="take_books.php" class="nav-link">
+                            <i class="nav-icon fas fa-undo-alt"></i>
                             <p>
-                                Take Book From Students
+                                <?php
+                                if ($user_lang == 'en') {
+                                ?>
+                                    Take Books From Students
+                                <?php
+                                } else {
+                                ?>
+                                    සිසුන්ගෙන් පොත් භාරගන්න
+                                <?php
+                                }
+                                ?>
                                 <!-- <span class="badge badge-info right">2</span> -->
                             </p>
                         </a>
@@ -136,7 +207,17 @@ if (isset($_SESSION['u_id'])) {
                         <a href="admins.php" class="nav-link">
                             <i class="nav-icon fas fa-user-shield"></i>
                             <p>
-                                Admins
+                                <?php
+                                if ($user_lang == 'en') {
+                                ?>
+                                    Admins
+                                <?php
+                                } else {
+                                ?>
+                                    පරිපාලකවරු
+                                <?php
+                                }
+                                ?>
                                 <!-- <span class="badge badge-info right">2</span> -->
                             </p>
                         </a>
@@ -145,7 +226,17 @@ if (isset($_SESSION['u_id'])) {
                         <a href="grade_connection.php" class="nav-link">
                             <i class="nav-icon fas fa-solid fa-network-wired"></i>
                             <p>
-                                Grade Connection
+                                <?php
+                                if ($user_lang == 'en') {
+                                ?>
+                                    Grade Connection
+                                <?php
+                                } else {
+                                ?>
+                                    ශ්‍රේණියේ සම්බන්ධතාවය
+                                <?php
+                                }
+                                ?>
                                 <!-- <span class="badge badge-info right">2</span> -->
                             </p>
                         </a>

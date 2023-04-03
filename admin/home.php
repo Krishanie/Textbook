@@ -17,11 +17,11 @@ if (isset($_SESSION['u_id'])) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0" id="tr5"></h1>
+                        <h1 class="m-0" id="tr5">Dashboard</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#" id="tr6"></a></li>
+                            <li class="breadcrumb-item"><a href="#" id="tr6">Home</a></li>
                             <li class="breadcrumb-item">Dashboard</li>
                         </ol>
                     </div><!-- /.col -->
@@ -45,7 +45,7 @@ if (isset($_SESSION['u_id'])) {
                                 $total_students_val = mysqli_num_rows($total_students_run);
                                 ?>
                                 <h3><?= $total_students_val ?></h3>
-                                <p id="tr1"></p>
+                                <p id="tr1">Total Students</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
@@ -64,7 +64,7 @@ if (isset($_SESSION['u_id'])) {
                                 $total_teachers_val = mysqli_num_rows($total_teachers_run);
                                 ?>
                                 <h3><?= $total_teachers_val ?></h3>
-                                <p id="tr2"></p>
+                                <p id="tr2">Total Teachers</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-stats-bars"></i>
@@ -134,24 +134,6 @@ if (isset($_SESSION['u_id'])) {
 
 <script>
     $(document).ready(function() {
-        siteLanguage();
+       
     });
-
-    function siteLanguage() {
-        if (sessionStorage.getItem("site_lang") == 'eng') {
-            $('#tr1').html('Total Students');
-            $('#tr2').html('Total Admins');
-            $('#tr3').html('Total Books');
-            $('#tr4').html('Some Text');
-            $('#tr5').html('Dashboard');
-            $('#tr6').html('Home');
-        } else if (sessionStorage.getItem("site_lang") == 'sin') {
-            $('#tr1').html('මුළු සිසුන්');
-            $('#tr2').html('මුළු පරිපාලකයින්');
-            $('#tr3').html('මුළු පොත්');
-            $('#tr4').html('Some Text');
-            $('#tr5').html('දත්ත පුවරුව');
-            $('#tr6').html('නිවස');
-        }
-    }
 </script>

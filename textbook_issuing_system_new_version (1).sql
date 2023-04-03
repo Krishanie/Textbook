@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2023 at 10:55 AM
+-- Generation Time: Apr 02, 2023 at 05:54 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -91,7 +91,10 @@ CREATE TABLE `book_stock` (
 --
 
 INSERT INTO `book_stock` (`book_id`, `book_serial_id`, `book_name`, `book_language`, `book_grade`, `studing_students`, `leftover_books`, `extra_requests`, `total_books`) VALUES
-(1, '342', 'Maths', 's', 'grd1', '24', '4', '4', '34');
+(1, '342', 'Maths', 's', 'grd1', '24', '2', '5', '36'),
+(4, '334', 'Sinhala', 's', 'grd2', '34', '5', '2', '45'),
+(5, '345', 'sdg', 's', 'grd1', '234', '235', '234', '234'),
+(6, '234', 'rtgjhrtrfhh weryrwehrhy', 's', 'grd1', '456', '46', '454', '5');
 
 -- --------------------------------------------------------
 
@@ -188,15 +191,16 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `name`, `index_no`, `grade`, `class`, `language`, `added_date`) VALUES
-(19, '', '', '', '', '', '2023-01-26'),
-(20, '', '', '', '', '', '2023-01-26'),
-(21, '', '', '', '', '', '2023-01-26'),
-(22, '', '', '', '', '', '2023-01-26'),
-(23, '', '', '', '', '', '2023-01-26'),
-(24, '', '', '', '', '', '2023-01-26'),
-(25, '', '', '', '', '', '2023-01-26'),
 (26, 'dsaf', '123', 'grd4', 'F', 's', '2023-02-12'),
-(27, 'sas', '123', 'grd1', 'C', 's', '2023-02-19');
+(27, 'sas', '123', 'grd1', 'C', 's', '2023-02-19'),
+(42, 'name2', '1023', 'grd2', 'A', 's', ''),
+(43, 'name3', '1024', 'grd2', 'A', 'e', ''),
+(44, 'name4', '1025', 'grd2', 'F', 's', ''),
+(46, 'name6', '1027', 'grd2', 'A', 'e', ''),
+(47, 'name7', '1028', 'grd2', 'A', 's', ''),
+(48, 'name8', '1029', 'grd2', 'D', 's', ''),
+(49, 'name9', '1030', 'grd2', 'A', 'e', ''),
+(50, 'name10', '1031', 'grd2', 'A', 'e', '');
 
 -- --------------------------------------------------------
 
@@ -212,6 +216,7 @@ CREATE TABLE `teachers` (
   `img` text NOT NULL,
   `role` text NOT NULL,
   `grade` text NOT NULL,
+  `lang` text NOT NULL,
   `added_date` text NOT NULL,
   `last_login` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -220,10 +225,10 @@ CREATE TABLE `teachers` (
 -- Dumping data for table `teachers`
 --
 
-INSERT INTO `teachers` (`id`, `name`, `username`, `password`, `img`, `role`, `grade`, `added_date`, `last_login`) VALUES
-(1, 'Main Admin ', 'main-admin', '12345', 'main-default.png', 'main-admin', 'all', '', '1680252529'),
-(4, 'Admin 1', 'admin1', '123', 'default.png', 'admin', 'grd1', '', '1679326421'),
-(5, 'Admin 2', 'admin2', '123', 'default.png', 'admin', 'grd2', '', '1674794690');
+INSERT INTO `teachers` (`id`, `name`, `username`, `password`, `img`, `role`, `grade`, `lang`, `added_date`, `last_login`) VALUES
+(1, 'Vibodha Sasmitha', 'main-admin', '12345', 'main-default.png', 'main-admin', 'all', 'sin', '', '1680252529'),
+(4, 'Admin 1', 'admin1', '123', 'default.png', 'admin', 'grd1', 'en', '', '1679326421'),
+(5, 'Admin 2', 'admin2', '123', 'default.png', 'admin', 'grd2', 'en', '', '1674794690');
 
 -- --------------------------------------------------------
 
@@ -250,7 +255,9 @@ INSERT INTO `will_give_books` (`id`, `book_id`, `stu_id`, `book_grade`, `give`) 
 (4, '5', '15', 'grd1', '1'),
 (5, '5', '11', 'grd1', '1'),
 (6, '5', '18', 'grd1', '0'),
-(7, '6', '27', 'grd1', '1');
+(7, '6', '27', 'grd1', '1'),
+(8, '1', '27', 'false', '1'),
+(9, '4', '43', 'false', '1');
 
 -- --------------------------------------------------------
 
@@ -274,7 +281,11 @@ INSERT INTO `will_take_books` (`id`, `book_id`, `stu_id`, `book_grade`, `take`) 
 (1, '2', '1', 'grd2', '1'),
 (2, '3', '1', 'grd2', '1'),
 (3, '1', '1', 'grd2', '1'),
-(4, '6', '27', 'grd1', '0');
+(4, '6', '27', 'grd1', '1'),
+(5, '5', '27', 'grd1', '0'),
+(6, '1', '27', 'grd1', '1'),
+(7, '4', '47', 'grd2', '1'),
+(8, '4', '42', 'grd2', '1');
 
 --
 -- Indexes for dumped tables
@@ -342,7 +353,7 @@ ALTER TABLE `available_grades`
 -- AUTO_INCREMENT for table `book_stock`
 --
 ALTER TABLE `book_stock`
-  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `chat`
@@ -360,7 +371,7 @@ ALTER TABLE `grade_connections`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `teachers`
@@ -372,13 +383,13 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `will_give_books`
 --
 ALTER TABLE `will_give_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `will_take_books`
 --
 ALTER TABLE `will_take_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

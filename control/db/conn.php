@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect('localhost','root','','textbook_issuing_system_new_version');
+$conn = mysqli_connect('localhost','root','','textbook_issuing_system');
 
 if(!$conn){
     echo 'Database Error';

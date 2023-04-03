@@ -54,13 +54,12 @@ if (isset($_SESSION['u_id'])) {
 
 
                 <!-- Right navbar links -->
-                <!-- <ul class="navbar-nav ml-auto"> -->
-                <!-- Navbar Search -->
-                <!-- <select id="full_site_lang" class="form-control">
-                        <option value="eng" selected>ENG</option>
+                <ul class="navbar-nav ml-auto">
+                    <select id="full_site_lang" class="form-control me-4">
+                        <option value="en" selected>ENG</option>
                         <option value="sin">SIN</option>
-                    </select> -->
-                <!-- </ul> -->
+                    </select>
+                </ul>
             </nav>
             <!-- /.navbar -->
 
@@ -75,7 +74,7 @@ if (isset($_SESSION['u_id'])) {
             <input type="hidden" id="first_grade_only" value="<?= $first_grade_only ?>">
 
 
-            
+
             <input type="hidden" id="msg_view_count">
 
 

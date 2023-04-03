@@ -9,8 +9,8 @@
 .form {
   position: relative;
   z-index: 1;
-  background: #FFFFFF;
-  max-width: 360px;
+  background: hsl(0, 0%, 100%);
+  /* max-width: 300px; */
   margin: 0 auto 100px;
   padding: 45px;
   text-align: center;
@@ -122,4 +122,11 @@ body {
   margin-bottom: 4px;
   color: white;
   font-size: 15px;
+}
+
+.site-logo{
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px; */
 }

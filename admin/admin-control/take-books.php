@@ -7,14 +7,13 @@ if (isset($_POST['get_student_book_data'])) {
 
     $stu_id = $_POST['id'];
     $grade = $_POST['grade'];
-    $grade_table = $grade . "_books";
 
-    $fetch_book = "SELECT * FROM $grade_table";
+    $fetch_book = "SELECT * FROM book_stock WHERE book_grade='$grade'";
     $fetch_book_run = mysqli_query($conn, $fetch_book);
     if (mysqli_num_rows($fetch_book_run) > 0) {
         foreach ($fetch_book_run as $book) {
 
-            $book_id = $book["id"];
+            $book_id = $book["book_id"];
 
             $ch_take = "SELECT * FROM will_take_books WHERE book_id='$book_id' AND stu_id='$stu_id' AND `take`='1'";
             $ch_take_run = mysqli_query($conn, $ch_take);
@@ -30,17 +29,17 @@ if (isset($_POST['get_student_book_data'])) {
             }
 
             if ($ch == 0) {
-                $html .= '<div onclick="check('  . $take_ch_id . ', '  . $book_id . ')" class="card text-center" style="margin-left: 5px;" id="tick_box_' . $book["id"] . '">
+                $html .= '<div onclick="check('  . $take_ch_id . ', '  . $book_id . ')" class="card text-center" style="margin-left: 5px; margin-right: 5px; width: auto; padding-left: 15px; padding-right: 15px;" id="tick_box_' . $book["book_id"] . '">
         <div class="mb-1">' . $book["book_name"] . '</div>
         <div style="pointer-events:none;">
-            <i class="fa fa-times-circle text-red btn"></i>
+        <img src="../admin/site_images/times-circle-regular.svg" width="25" class="mb-2" style="filter: invert(10%) sepia(90%) saturate(6437%) hue-rotate(360deg) brightness(93%) contrast(108%);" />
         </div>
     </div>';
             } else {
-                $html .= '<div onclick="uncheck(' . $take_ch_id . ', '  . $book_id . ')" class="card text-center" style="margin-left: 5px;" id="tick_box_' . $book["id"] . '">
+                $html .= '<div onclick="uncheck(' . $take_ch_id . ', '  . $book_id . ')" class="card text-center" style="margin-left: 5px; margin-right: 5px; width: auto; padding-left: 15px; padding-right: 15px;"" id="tick_box_' . $book["book_id"] . '">
         <div class="mb-1">' . $book["book_name"] . '</div>
         <div style="pointer-events:none;">
-            <i class="fa fa-check-circle text-success btn"></i>
+        <img src="../admin/site_images/check-circle-regular.svg" width="25" class="mb-2" style="filter: invert(40%) sepia(82%) saturate(1443%) hue-rotate(89deg) brightness(110%) contrast(111%);" />
         </div>
     </div>';
             }
@@ -74,16 +73,14 @@ if (isset($_POST['check_take_book'])) {
 
     if ($ch_take_book_run) {
 
-        $grade_table = $grade . "_books";
-
-        $get_book_stock = "SELECT * FROM " . $grade_table . " WHERE id='$book_id'";
+        $get_book_stock = "SELECT * FROM book_stock WHERE book_id='$book_id'";
         $get_book_stock_run = mysqli_query($conn, $get_book_stock);
         while ($get_book_stock = $get_book_stock_run->fetch_assoc()) {
             $last_book1 = $get_book_stock['leftover_books'] + 1;
             $last_book2 = $get_book_stock['total_books'] + 1;
         }
 
-        $change_book_stock = "UPDATE " . $grade_table . " SET total_books='$last_book2', leftover_books='$last_book1' WHERE id='$book_id'";
+        $change_book_stock = "UPDATE book_stock SET total_books='$last_book2', leftover_books='$last_book1' WHERE book_id='$book_id'";
         $change_book_stock_run = mysqli_query($conn, $change_book_stock);
 
         $res = [
@@ -119,15 +116,13 @@ if (isset($_POST['uncheck_take_book'])) {
 
     if ($ch_take_book_run) {
 
-        $grade_table = $grade . "_books";
-
-        $get_book_stock = "SELECT * FROM " . $grade_table . " WHERE id='$book_id'";
+        $get_book_stock = "SELECT * FROM book_stock WHERE book_id='$book_id'";
         $get_book_stock_run = mysqli_query($conn, $get_book_stock);
         while ($get_book_stock = $get_book_stock_run->fetch_assoc()) {
             $last_book1 = $get_book_stock['total_books'] - 1;
         }
 
-        $change_book_stock = "UPDATE " . $grade_table . " SET total_books='$last_book1' WHERE id='$book_id'";
+        $change_book_stock = "UPDATE book_stock SET total_books='$last_book1' WHERE book_id='$book_id'";
         $change_book_stock_run = mysqli_query($conn, $change_book_stock);
 
         $res = [

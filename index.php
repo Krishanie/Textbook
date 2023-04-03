@@ -10,8 +10,22 @@
     <link rel="stylesheet" href="assets/login-page/style.css">
 </head>
 
+<?php
+include('control/db/conn.php');
+$site_data = "SELECT * FROM book_site_data WHERE id='1'";
+$site_data_run = mysqli_query($conn, $site_data);
+while ($site_datas2 = $site_data_run->fetch_assoc()) {
+    $site_logo = $site_datas2['logo'];
+}
+?>
+
 <body onkeyup="key(event);">
+
+
     <div class="login-page">
+        <div class="site-logo">
+            <center><img src="../admin/site_images/<?= $site_logo ?>" width="120" alt="AdminLTE Logo" class="logo"></center>
+        </div>
         <div class="form">
             <h3>Login</h3>
             <div class="login-form">

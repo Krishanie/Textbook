@@ -528,4 +528,19 @@ if (isset($_SESSION['u_id'])) {
     function reload_table() {
         table.ajax.reload(null, false);
     }
+
+    function key(event) {
+        // console.log(event.which);
+        if (event.which == 13) {
+            if ($('#confirm_modal').is(':visible')) {
+                delete_stock();
+            }
+            if ($('#edit_data_modal').is(':visible')) {
+                edit_data();
+            }
+            if ($('#add_data_modal').is(':visible')) {
+                add_new_stock();
+            }
+        }
+    }
 </script>

@@ -48,32 +48,25 @@ if (isset($_SESSION['u_id'])) {
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="row">
-                            <div class="col-md-1">
-                                <h3 class="card-title">Student Details</h3>
-                            </div>
-                            <div class="col-md-3">
-                                <select id="grades" class="form-control">
-                                    <option value="0" disabled selected>Select Grade</option>
-                                    <?php
-                                    $grade_data = "SELECT * FROM available_grades";
-                                    $grade_data_run = mysqli_query($conn, $grade_data);
-                                    $i = 1;
-                                    foreach ($grade_data_run as $grade) {
-                                    ?>
-                                        <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
+                        <h3 class="card-title">Book Stock Details</h3>
+                        <div class="col-md-3 mb-1 float-end">
+                            <select id="table_data_grade" class="form-control mb-2">
+                                <?php
+                                $grade_data = "SELECT * FROM available_grades";
+                                $grade_data_run = mysqli_query($conn, $grade_data);
+                                $i = 1;
+                                foreach ($grade_data_run as $grade) {
+                                ?>
+                                    <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
 
-                                    <?php
-                                        $i = $i + 1;
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="col-md-8">
-                                <button class="btn btn-primary float-end" id="add_new_stock" onclick="add_modal()">Add New Student</button>
-                                <button class="btn btn-success float-end" onclick="imp_excel()">Import From Excel Sheet</button>
-                            </div>
+                                <?php
+                                    $i = $i + 1;
+                                }
+                                ?>
+                            </select>
                         </div>
+                        <button class="btn btn-primary float-end ml-2" id="add_new_stock" onclick="add_modal()">Add New Student</button>
+                        <button class="btn btn-success float-end" onclick="imp_excel()">Import From Excel Sheet</button>
                     </div>
 
                     <!-- /.card-header -->
@@ -189,11 +182,11 @@ if (isset($_SESSION['u_id'])) {
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="">Index No</label>
-                        <input type="text" id="add_index_no" class="form-control">
+                        <input type="text" id="add_index_no" class="form-control" placeholder="Enter Index Number">
                     </div>
                     <div class="form-group">
                         <label for="">Student Name</label>
-                        <input type="text" id="add_student_name" class="form-control">
+                        <input type="text" id="add_student_name" class="form-control" placeholder="Enter Student Name">
                     </div>
                     <div class="form-group">
                         <label for="">Student Language</label>
@@ -206,9 +199,9 @@ if (isset($_SESSION['u_id'])) {
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="">Grade</label>
-                                <select id="add_student_grade" class="form-control">
-                                    <option value="0" disabled selected>Select Grade</option>
+                                <label for="">Select Grade</label>
+                                <select id="add_student_grade" class="form-control mb-2">
+                                    <option value="0" selected disabled>Select Grade</option>
                                     <?php
                                     $grade_data = "SELECT * FROM available_grades";
                                     $grade_data_run = mysqli_query($conn, $grade_data);
@@ -225,7 +218,7 @@ if (isset($_SESSION['u_id'])) {
                             </div>
                             <div class="col-md-6">
                                 <label for="">Class</label>
-                                <input type="text" id="add_student_class" class="form-control">
+                                <input type="text" id="add_student_class" class="form-control" placeholder="Enter Class">
                             </div>
                         </div>
                     </div>
@@ -253,9 +246,9 @@ if (isset($_SESSION['u_id'])) {
                 <form action="admin-control/students.php" id="form" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="">Grade</label>
-                            <select id="imp_student_grade" class="form-control">
-                                <option value="0" disabled selected>Select Grade</option>
+                            <label for="">Select Grade</label>
+                            <select id="imp_student_grade" class="form-control mb-2">
+                                <option value="0" selected disabled>Select Grade</option>
                                 <?php
                                 $grade_data = "SELECT * FROM available_grades";
                                 $grade_data_run = mysqli_query($conn, $grade_data);
@@ -278,7 +271,7 @@ if (isset($_SESSION['u_id'])) {
                 </form>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" onclick="import_now()" class="btn btn-success">Import</button>
+                    <button type="button" onclick="import_now()" class="btn btn-success" id="excel-import-btn">Import</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -317,16 +310,26 @@ if (isset($_SESSION['u_id'])) {
 
 <script>
     var table;
+    var delete_com;
     $(document).ready(function() {
-
-        $('#grades').on('change', function() {
-            window.location.href = 'students.php?grade=' + $('#grades').val(); + '';
+        // console.log($('#admin_grade_inp').val());
+        var table_data = {
+            get_table_data: true,
+            grade: $('#table_data_grade').val(),
+        }
+        load_table(table_data)
+        $('#table_data_grade').on('change', function() {
+            var table_data = {
+                get_table_data: true,
+                grade: $('#table_data_grade').val(),
+            }
+            load_table(table_data)
         });
 
-        if (getUrlParameter('grade')) {
-            $('#grades').val(getUrlParameter('grade'));
-        }
+    });
 
+    function load_table(table_data) {
+        $('#students_table').DataTable().clear().destroy();
         table = $("#students_table").DataTable({
             "responsive": true,
             "autoWidth": false,
@@ -341,10 +344,7 @@ if (isset($_SESSION['u_id'])) {
             "ajax": {
                 "url": "admin-control/students.php",
                 "type": "POST",
-                "data": {
-                    get_table_data: true,
-                    grade: getUrlParameter('grade')
-                }
+                "data": table_data,
             },
             //Set column definition initialisation properties.
             "columnDefs": [{
@@ -365,8 +365,7 @@ if (isset($_SESSION['u_id'])) {
                 },
             ],
         });
-
-    });
+    }
 
     function get_edit_student_data(id) {
 
@@ -429,13 +428,13 @@ if (isset($_SESSION['u_id'])) {
     }
 
     function add_modal() {
-        $('#add_index_no').val(""),
-            $('#add_student_name').val(""),
-            $('#add_student_language option[value=0]').attr('selected', 'selected');
+        $('#add_index_no').val("");
+        $('#add_student_name').val("");
+        $('#add_student_language option[value=0]').attr('selected', 'selected');
         $('#add_student_grade option[value=0]').attr('selected', 'selected');
-        $('#add_student_class').val(""),
+        $('#add_student_class').val("");
 
-            $('#add_data_modal').modal('show');
+        $('#add_data_modal').modal('show');
     }
 
     function add_new_student() {
@@ -471,7 +470,7 @@ if (isset($_SESSION['u_id'])) {
 
     function delete_student_modal(id) {
         $('#confirm_val').val(id);
-        $('#confirm_modal').modal('show');
+        var delete_com = $('#confirm_modal').modal('show');
     }
 
     function delete_student() {
@@ -501,17 +500,29 @@ if (isset($_SESSION['u_id'])) {
     }
 
     function imp_excel() {
+        $('#excel-import-btn').html('Import');
+        $('#excel-import-btn').attr('disabled', false);
+
         $('#add_excel_modal').modal('show');
     }
 
     function import_now() {
+        $('#excel-import-btn').html('Importing...');
+        $('#excel-import-btn').attr('disabled', true);
+
         let form_data = new FormData();
         let img = $("#excel_sheet")[0].files;
 
         // Check image selected or not
         if ($('#imp_student_grade :selected').val() == 0) {
+            $('#excel-import-btn').html('Import');
+            $('#excel-import-btn').attr('disabled', false);
+
             message('warning', '"Grade" Field Required!');
         } else if ($("#excel_sheet").val() == "") {
+            $('#excel-import-btn').html('Import');
+            $('#excel-import-btn').attr('disabled', false);
+
             message('warning', 'Please Select Excel File!');
         } else {
             form_data.append('excel_import', true);
@@ -525,6 +536,9 @@ if (isset($_SESSION['u_id'])) {
                 contentType: false,
                 processData: false,
                 success: function(response) {
+                    $('#excel-import-btn').html('Import');
+                    $('#excel-import-btn').attr('disabled', false);
+
                     var res = jQuery.parseJSON(response);
                     console.log(response);
                     if (res.status == 400) {
@@ -586,5 +600,23 @@ if (isset($_SESSION['u_id'])) {
 
     function reload_table() {
         table.ajax.reload(null, false);
+    }
+
+    function key(event) {
+        // console.log(event.which);
+        if (event.which == 13) {
+            if ($('#confirm_modal').is(':visible')) {
+                delete_student();
+            }
+            if ($('#add_data_modal').is(':visible')) {
+                add_new_student();
+            }
+            if ($('#add_excel_modal').is(':visible')) {
+                import_now();
+            }
+            if ($('#edit_data_modal').is(':visible')) {
+                edit_data();
+            }
+        }
     }
 </script>

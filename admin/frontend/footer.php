@@ -55,6 +55,40 @@ if (isset($_SESSION['u_id'])) {
     </html>
 
     <script>
+        $(document).ready(function() {
+
+            select_lang();
+
+            $('#full_site_lang').on('change', function() {
+                $.ajax({
+                    type: "POST",
+                    url: "../admin/admin-control/admins.php",
+                    data: {
+                        change_admin_lang: true,
+                        'lang': $(this).val(),
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        location.reload();
+                    }
+                });
+            });
+        });
+
+        function select_lang() {
+            $.ajax({
+                type: "POST",
+                url: "../admin/admin-control/admins.php",
+                data: {
+                    get_admin_lang: true,
+                },
+                success: function(response) {
+                    // console.log(response);
+                    $('#full_site_lang option[value=' + response + ']').attr('selected', 'selected');
+                }
+            });
+        }
+
         function key(event) {
             // console.log(event.which);
         }

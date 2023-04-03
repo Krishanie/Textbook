@@ -20,7 +20,17 @@ if (isset($_POST['get_table_data'])) {
                     $row = array();
                     $row[] = $book['index_no'];
                     $row[] = $book['name'];
-                    $row[] = $book['grade'];
+
+                    $admin_grade = $book['grade'];
+
+                    $find_grade_data = "SELECT * FROM available_grades WHERE value='$admin_grade'";
+                    $find_grade_data_run = mysqli_query($conn, $find_grade_data);
+                    while ($admin_grade_for = mysqli_fetch_assoc($find_grade_data_run)) {
+                        $grade_for_table = $admin_grade_for['grade'];
+
+                        $row[] = $grade_for_table;
+                    }
+
                     $row[] = $book['class'];
                     $row[] = $book['language'];
                     $row[] = $book["id"];
