@@ -170,7 +170,7 @@ if (isset($_SESSION['u_id'])) {
                                 <?php
                                 if ($user_lang == 'en') {
                                 ?>
-                                    Give Books For Students
+                                    Distribution of books to students
                                 <?php
                                 } else {
                                 ?>

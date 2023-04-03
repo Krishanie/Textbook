@@ -17,12 +17,12 @@ if (isset($_SESSION['u_id'])) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Give Book Details</h1>
+                        <h1 class="m-0">Distribution Books Details</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a class="nav-link text-primary" href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Give Book Details</li>
+                            <li class="breadcrumb-item active">Distribution Books Details</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -48,7 +48,7 @@ if (isset($_SESSION['u_id'])) {
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Give Book For Students | සිසුන් වෙත පොත් ලබා දීම.</h3>
+                        <h3 class="card-title">Distribution Of Books To Students | සිසුන් වෙත පොත් ලබා දීම.</h3>
                         <div class="col-md-3 float-end">
                             <select id="table_data_grade" class="form-control mb-2">
                                 <?php
