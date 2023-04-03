@@ -9,6 +9,7 @@ if (isset($_SESSION['u_id'])) {
     while ($row = $user_data_run->fetch_assoc()) {
         $user_lang = $row["lang"];
         $user_name = $row["name"];
+        $user_grade = $row["grade"];
         $user_role = $row["role"];
         $user_img = $row["img"];
     }

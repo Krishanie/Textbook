@@ -30,7 +30,7 @@ if (isset($_SESSION['u_id'])) {
         </div>
         <!-- /.content-header -->
 
-        <?php
+        <!-- <?php
         if (isset($_GET['grade'])) {
         ?>
             <input type="hidden" value="1" id="check_if_grade">
@@ -40,7 +40,7 @@ if (isset($_SESSION['u_id'])) {
             <input type="hidden" value="0" id="check_if_grade">
         <?php
         }
-        ?>
+        ?> -->
 
         <!-- Main content -->
         <section class="content">
@@ -50,6 +50,9 @@ if (isset($_SESSION['u_id'])) {
                     <div class="card-header">
                         <h3 class="card-title">Book Stock Details</h3>
                         <div class="col-md-3 mb-1 float-end">
+                            <?php
+                            if($user_grade == 'all'){
+                            ?>
                             <select id="table_data_grade" class="form-control mb-2">
                                 <?php
                                 $grade_data = "SELECT * FROM available_grades";
@@ -64,6 +67,9 @@ if (isset($_SESSION['u_id'])) {
                                 }
                                 ?>
                             </select>
+                            <?php
+                            }
+                            ?>
                         </div>
                         <button class="btn btn-primary float-end ml-2" id="add_new_stock" onclick="add_modal()">Add New Student</button>
                         <button class="btn btn-success float-end" onclick="imp_excel()">Import From Excel Sheet</button>
