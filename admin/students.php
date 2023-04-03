@@ -31,15 +31,15 @@ if (isset($_SESSION['u_id'])) {
         <!-- /.content-header -->
 
         <!-- <?php
-        if (isset($_GET['grade'])) {
-        ?>
+                if (isset($_GET['grade'])) {
+                ?>
             <input type="hidden" value="1" id="check_if_grade">
         <?php
-        } else {
+                } else {
         ?>
             <input type="hidden" value="0" id="check_if_grade">
         <?php
-        }
+                }
         ?> -->
 
         <!-- Main content -->
@@ -50,26 +50,31 @@ if (isset($_SESSION['u_id'])) {
                     <div class="card-header">
                         <h3 class="card-title">Book Stock Details</h3>
                         <div class="col-md-3 mb-1 float-end">
-                            <?php
-                            if($user_grade == 'all'){
-                            ?>
                             <select id="table_data_grade" class="form-control mb-2">
                                 <?php
                                 $grade_data = "SELECT * FROM available_grades";
                                 $grade_data_run = mysqli_query($conn, $grade_data);
-                                $i = 1;
-                                foreach ($grade_data_run as $grade) {
+                                if ($user_grade == 'all') {
+                                    $i = 1;
+                                    foreach ($grade_data_run as $grade) {
                                 ?>
-                                    <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
+                                        <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
 
+                                    <?php
+                                        $i = $i + 1;
+                                    }
+                                } else {
+                                    $grade_data_name = "SELECT * FROM available_grades WHERE value='$user_grade'";
+                                    $grade_data_name_run = mysqli_query($conn, $grade_data_name);
+                                    while ($grd_n = $grade_data_name_run->fetch_assoc()) {
+                                        $user_grade_name = $grd_n['grade'];
+                                    }
+                                    ?>
+                                    <option value="<?= $user_grade ?>"><?= $user_grade_name ?></option>
                                 <?php
-                                    $i = $i + 1;
                                 }
                                 ?>
                             </select>
-                            <?php
-                            }
-                            ?>
                         </div>
                         <button class="btn btn-primary float-end ml-2" id="add_new_stock" onclick="add_modal()">Add New Student</button>
                         <button class="btn btn-success float-end" onclick="imp_excel()">Import From Excel Sheet</button>
