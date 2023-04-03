@@ -23,10 +23,10 @@ while ($site_datas2 = $site_data_run->fetch_assoc()) {
 
 
     <div class="login-page">
-        <div class="site-logo">
-            <center><img src="../admin/site_images/<?= $site_logo ?>" width="120" alt="AdminLTE Logo" class="logo"></center>
-        </div>
         <div class="form">
+            <div class="site-logo">
+                <center><img src="./admin/site_images/DSC logo (vector).png" width="120" alt="AdminLTE Logo" class="logo"></center>
+            </div>
             <h3>Login</h3>
             <div class="login-form">
                 <div class="err-msg" id="err-msg"></div>
