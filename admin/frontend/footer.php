@@ -6,7 +6,7 @@ if (isset($_SESSION['u_id'])) {
         <strong>Copyright &copy; 2023 <a href="https://www.defencesc.lk/">DefenceSC.lk</a>.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
-            <b>Creator</b> Vibodha Sasmitha
+            <b>Creator</b> Lincoln University
         </div>
     </footer>
 
