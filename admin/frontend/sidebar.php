@@ -135,7 +135,7 @@ if (isset($_SESSION['u_id'])) {
                                 </p>
                             </a>
                         </li>
-                    <?php } else if ($data[0][3] == 1) { ?>
+                    <?php } else if ($data[1][3] == 1) { ?>
                         <li class="nav-item">
                             <a href="site_edit.php" class="nav-link">
                                 <i class="nav-icon fas fa-info-circle"></i>
@@ -180,7 +180,7 @@ if (isset($_SESSION['u_id'])) {
                                 </p>
                             </a>
                         </li>
-                    <?php } else if ($data[0][3] == 1) { ?>
+                    <?php } else if ($data[2][3] == 1) { ?>
                         <li class="nav-item">
                             <a href="book_stock.php" class="nav-link">
                                 <i class="nav-icon fas fa-solid fa-book"></i>
@@ -223,7 +223,7 @@ if (isset($_SESSION['u_id'])) {
                                 </p>
                             </a>
                         </li>
-                    <?php } else if ($data[0][3] == 1) { ?>
+                    <?php } else if ($data[3][3] == 1) { ?>
                         <li class="nav-item">
                             <a href="students.php" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
@@ -266,7 +266,7 @@ if (isset($_SESSION['u_id'])) {
                                 </p>
                             </a>
                         </li>
-                    <?php } else if ($data[0][3] == 1) { ?>
+                    <?php } else if ($data[4][3] == 1) { ?>
                         <li class="nav-item">
                             <a href="give_books.php" class="nav-link">
                                 <i class="nav-icon fas fa-redo-alt"></i>
@@ -309,7 +309,7 @@ if (isset($_SESSION['u_id'])) {
                                 </p>
                             </a>
                         </li>
-                    <?php } else if ($data[0][3] == 1) { ?>
+                    <?php } else if ($data[5][3] == 1) { ?>
                         <li class="nav-item">
                             <a href="take_books.php" class="nav-link">
                                 <i class="nav-icon fas fa-undo-alt"></i>
@@ -352,7 +352,7 @@ if (isset($_SESSION['u_id'])) {
                                 </p>
                             </a>
                         </li>
-                    <?php } else if ($data[0][3] == 1) { ?>
+                    <?php } else if ($data[6][3] == 1) { ?>
                         <li class="nav-item">
                             <a href="admins.php" class="nav-link">
                                 <i class="nav-icon fas fa-user-shield"></i>
@@ -395,27 +395,7 @@ if (isset($_SESSION['u_id'])) {
                                 </p>
                             </a>
                         </li>
-                    <?php } else if ($data[0][3] == 1) { ?>
-                        <li class="nav-item">
-                            <a href="grade_connection.php" class="nav-link">
-                                <i class="nav-icon fas fa-solid fa-network-wired"></i>
-                                <p>
-                                    <?php
-                                    if ($user_lang == 'en') {
-                                    ?>
-                                        Grade Connection
-                                    <?php
-                                    } else {
-                                    ?>
-                                        ශ්‍රේණියේ සම්බන්ධතාවය
-                                    <?php
-                                    }
-                                    ?>
-                                    <!-- <span class="badge badge-info right">2</span> -->
-                                </p>
-                            </a>
-                        </li>
-
+                    <?php } else if ($data[7][3] == 1) { ?>
                         <li class="nav-item">
                             <a href="grade_connection.php" class="nav-link">
                                 <i class="nav-icon fas fa-solid fa-network-wired"></i>
@@ -458,7 +438,7 @@ if (isset($_SESSION['u_id'])) {
                                 </p>
                             </a>
                         </li>
-                    <?php } else if ($data[0][3] == 1) { ?>
+                    <?php } else if ($data[8][3] == 1) { ?>
                         <li class="nav-item">
                             <a href="admin-view-pages.php" class="nav-link">
                                 <i class="nav-icon fas fa-solid fa-eye"></i>
