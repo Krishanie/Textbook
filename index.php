@@ -5,19 +5,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <?php
+    include('control/db/conn.php');
+    $site_data = "SELECT * FROM book_site_data WHERE id='1'";
+    $site_data_run = mysqli_query($conn, $site_data);
+    while ($site_datas2 = $site_data_run->fetch_assoc()) {
+        $site_logo = $site_datas2['logo'];
+    }
+    ?>
     <title>Login Page</title>
+    <link rel="icon" type="image/x-icon" href="../admin/site_images/<?= $site_logo ?>">
 
     <link rel="stylesheet" href="assets/login-page/style.css">
 </head>
-
-<?php
-include('control/db/conn.php');
-$site_data = "SELECT * FROM book_site_data WHERE id='1'";
-$site_data_run = mysqli_query($conn, $site_data);
-while ($site_datas2 = $site_data_run->fetch_assoc()) {
-    $site_logo = $site_datas2['logo'];
-}
-?>
 
 <body onkeyup="key(event);">
 
