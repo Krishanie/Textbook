@@ -15,7 +15,7 @@
     }
     ?>
     <title>Login Page</title>
-    <link rel="icon" type="image/x-icon" href="../admin/site_images/<?= $site_logo ?>">
+    <link rel="icon" type="image/x-icon" href="./admin/site_images/<?= $site_logo ?>">
 
     <link rel="stylesheet" href="assets/login-page/style.css">
 </head>
