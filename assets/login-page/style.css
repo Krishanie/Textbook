@@ -10,6 +10,7 @@
   position: relative;
   z-index: 1;
   background: hsl(0, 0%, 100%);
+  border-radius: 13px;
   /* max-width: 300px; */
   margin: 0 auto 100px;
   padding: 45px;
@@ -124,9 +125,9 @@ body {
   font-size: 15px;
 }
 
-.site-logo{
-  /* display: flex;
+/* .site-logo{
+  display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px; */
-}
+  margin-bottom: 30px;
+} */
