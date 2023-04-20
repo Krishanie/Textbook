@@ -34,7 +34,7 @@
                 <input type="text" id="txt_uname" placeholder="username" />
                 <input type="password" id="txt_pass" placeholder="password" />
                 <button id="login-btn">Login</button>
-                <!-- <p class="message">Not registered? <a href="#">Create an account</a></p> -->
+                <p class="message">Lincoln University</p>
             </div>
         </div>
     </div>
