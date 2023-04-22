@@ -93,7 +93,7 @@ if (isset($_SESSION['u_id'])) {
                             </a>
                         </li>
                     <?php } else if ($data[0][3] == 1) { ?>
-                        <li class="nav-item">
+                        <li class="nav-item"> 
                             <a href="home.php" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
