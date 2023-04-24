@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2023 at 05:56 PM
+-- Generation Time: Apr 24, 2023 at 04:09 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -91,10 +91,9 @@ CREATE TABLE `book_stock` (
 --
 
 INSERT INTO `book_stock` (`book_id`, `book_serial_id`, `book_name`, `book_language`, `book_grade`, `studing_students`, `leftover_books`, `extra_requests`, `total_books`) VALUES
-(1, '342', 'Maths', 's', 'grd1', '24', '2', '5', '36'),
-(4, '334', 'Sinhala', 's', 'grd2', '34', '5', '2', '45'),
-(5, '345', 'sdg', 's', 'grd1', '234', '235', '234', '234'),
-(6, '234', 'rtgjhrtrfhh weryrwehrhy', 's', 'grd1', '456', '46', '454', '5');
+(4, '334', 'Sinhala', 's', 'grd2', '34', '2', '2', '46'),
+(5, '345', 'sdg', 's', 'grd1', '234', '232', '234', '238'),
+(6, '234', 'rtgjhrtrfhh weryrwehrhy', 's', 'grd1', '456', '43', '454', '8');
 
 -- --------------------------------------------------------
 
@@ -249,14 +248,14 @@ CREATE TABLE `view_pages` (
 
 INSERT INTO `view_pages` (`id`, `page_name`, `page_find`, `page_view`) VALUES
 (1, 'Dashboard', 'dash', 1),
-(2, 'Site Data', 'sitedata', 1),
+(2, 'Site Data', 'sitedata', 0),
 (3, 'Book Stock', 'bookstock', 1),
 (4, 'Students', 'students', 1),
 (5, 'Distribution of books to students', 'distributionbooks', 1),
 (6, 'Take Books From Students', 'takebooks', 1),
-(7, 'Admins', 'admins', 1),
-(8, 'Grade Connections', 'grdconn', 1),
-(9, 'Admin View Pages', 'adminview', 1);
+(7, 'Admins', 'admins', 0),
+(8, 'Grade Connections', 'grdconn', 0),
+(9, 'Admin View Pages', 'adminview', 0);
 
 -- --------------------------------------------------------
 
@@ -285,7 +284,12 @@ INSERT INTO `will_give_books` (`id`, `book_id`, `stu_id`, `book_grade`, `give`) 
 (6, '5', '18', 'grd1', '0'),
 (7, '6', '27', 'grd1', '1'),
 (8, '1', '27', 'false', '1'),
-(9, '4', '43', 'false', '1');
+(9, '4', '43', 'false', '1'),
+(10, '1', '27', 'grd1', '0'),
+(11, '5', '27', 'grd1', '1'),
+(12, '4', '44', 'grd2', '0'),
+(13, '4', '48', 'grd2', '1'),
+(14, '4', '50', 'grd2', '1');
 
 -- --------------------------------------------------------
 
@@ -310,7 +314,7 @@ INSERT INTO `will_take_books` (`id`, `book_id`, `stu_id`, `book_grade`, `take`) 
 (2, '3', '1', 'grd2', '1'),
 (3, '1', '1', 'grd2', '1'),
 (4, '6', '27', 'grd1', '1'),
-(5, '5', '27', 'grd1', '0'),
+(5, '5', '27', 'grd1', '1'),
 (6, '1', '27', 'grd1', '1'),
 (7, '4', '47', 'grd2', '1'),
 (8, '4', '42', 'grd2', '1');
@@ -423,7 +427,7 @@ ALTER TABLE `view_pages`
 -- AUTO_INCREMENT for table `will_give_books`
 --
 ALTER TABLE `will_give_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `will_take_books`
