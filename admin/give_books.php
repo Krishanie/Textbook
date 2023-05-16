@@ -229,6 +229,7 @@ if (isset($_SESSION['u_id'])) {
                 },
             ],
         });
+        clearconsole();  
     }
 
     function check(id, book_id) {
@@ -351,4 +352,15 @@ if (isset($_SESSION['u_id'])) {
     function reload_table() {
         table.ajax.reload(null, false);
     }
+
+clearconsole();  
+
+    function clearconsole() 
+ {  
+   console.log(window.console);   
+   if(window.console ) 
+   {     
+     console.clear();   
+   } 
+ } 
 </script>
