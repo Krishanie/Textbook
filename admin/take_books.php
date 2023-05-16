@@ -83,6 +83,7 @@ if (isset($_SESSION['u_id'])) {
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div id="err-msg"></div>
+                        
                         <table class="table table-striped" id="students_table">
                             <thead>
                                 <th>Index No</th>
@@ -116,7 +117,7 @@ if (isset($_SESSION['u_id'])) {
     <!-- /.content-wrapper -->
 
     <!-- Edit Data Modal -->
-    <div class="modal fade" id="take_books_modal">
+    <div class="modal fade all_modal" id="take_books_modal">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="overlay" id="overlay_modal">
@@ -124,7 +125,7 @@ if (isset($_SESSION['u_id'])) {
                 </div>
                 <div class="modal-header">
                     <h4 class="modal-title">Take Books</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close_modal();">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -142,12 +143,12 @@ if (isset($_SESSION['u_id'])) {
     </div>
 
     <!-- Delete Confirm Modal -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="confirm_modal">
+    <div class="modal fade all_modal" tabindex="-1" role="dialog" id="confirm_modal">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Are You Sure?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" onclick="close_modal();" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>

@@ -34,7 +34,6 @@
                 <input type="text" id="txt_uname" placeholder="username" />
                 <input type="password" id="txt_pass" placeholder="password" />
                 <button id="login-btn">Login</button>
-                <p class="message">Lincoln University</p>
             </div>
         </div>
     </div>
@@ -105,3 +104,5 @@
         }
     }
 </script>
+
+                <!-- <p class="message">Lincoln University</p> -->

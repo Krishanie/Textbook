@@ -77,12 +77,12 @@ if (isset($_SESSION['u_id'])) {
     <!-- /.content-wrapper -->
 
     <!-- Edit Data Modal -->
-    <div class="modal fade" id="edit_data_modal">
+    <div class="modal fade all_modal" id="edit_data_modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Admin Data</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" onclick="close_modal();"class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -128,7 +128,7 @@ if (isset($_SESSION['u_id'])) {
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" onclick="close_modal();"class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" onclick="edit_data()" class="btn btn-success">Edit</button>
                 </div>
             </div>
@@ -138,12 +138,12 @@ if (isset($_SESSION['u_id'])) {
     </div>
 
     <!-- Add Data Modal -->
-    <div class="modal fade" id="add_data_modal">
+    <div class="modal fade all_modal" id="add_data_modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Add New Admin</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button"  onclick="close_modal();"class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -187,7 +187,7 @@ if (isset($_SESSION['u_id'])) {
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" onclick="close_modal();"class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" onclick="add_new_admin()" class="btn btn-primary">Add</button>
                 </div>
             </div>
@@ -197,12 +197,12 @@ if (isset($_SESSION['u_id'])) {
     </div>
 
     <!-- Delete Confirm Modal -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="confirm_modal">
+    <div class="modal fade all_modal" tabindex="-1" role="dialog" id="confirm_modal">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Are You Sure?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" onclick="close_modal();"class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -211,7 +211,7 @@ if (isset($_SESSION['u_id'])) {
                     <input type="hidden" id="confirm_val">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" onclick="close_modal();"class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-danger" id="confirm_m_btn" onclick="delete_admin()">Yes, Delete!</button>
                 </div>
             </div>

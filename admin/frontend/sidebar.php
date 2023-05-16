@@ -23,10 +23,11 @@ if (isset($_SESSION['u_id'])) {
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="#" class="brand-link" style="text-decoration: none;">
-            <img src="../admin/site_images/<?= $site_logo ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8;"><br>
-            <span class="brand-text font-weight-light" style="width: 50px;"><?= $site_name ?></span>
-        </a>
+            <center><img src="../admin/site_images/<?= $site_logo ?>" alt="AdminLTE Logo" class="brand-image elevation-3" width="50" height="50" style="opacity: .8; padding:0; margin:10px 0 0 0;"><br></center>
+
+            <a href="#" class="brand-link" style="text-decoration: none;">
+                <span class="brand-text font-weight-light" style="width: 50px;"><?= $site_name ?></span>
+            </a>
 
         <!-- Sidebar -->
         <div class="sidebar">
@@ -93,7 +94,7 @@ if (isset($_SESSION['u_id'])) {
                             </a>
                         </li>
                     <?php } else if ($data[0][3] == 1) { ?>
-                        <li class="nav-item"> 
+                        <li class="nav-item">
                             <a href="home.php" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
