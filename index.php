@@ -19,7 +19,8 @@ while ($site_datas2 = $site_data_run->fetch_assoc()) {
 }
 ?>
 
-<body onkeyup="key(event);">
+<body onkeyup="key(event)">
+
 
 
     <div class="login-page">

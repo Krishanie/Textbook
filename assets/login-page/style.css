@@ -1,4 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+body {
+  background-image: url('../../admin/site_images/bgimage.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 
 .login-page {
   width: 360px;
@@ -33,7 +39,7 @@
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #0061e0;
+  background: #030d1b;
   width: 100%;
   border: 0;
   padding: 15px;
@@ -47,7 +53,7 @@
 .form button:hover,
 .form button:active,
 .form button:focus {
-  background: #016fff;
+  background: #05070a;
 }
 
 .form .message {
@@ -107,7 +113,7 @@
 }
 
 body {
-  background: #0061e0;
+  /*background: #0061e0;*?
   /* fallback for old browsers */
   /* background: rgb(141, 194, 111);
   background: linear-gradient(90deg, rgba(141, 194, 111, 1) 0%, rgba(118, 184, 82, 1) 50%); */

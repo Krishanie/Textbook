@@ -74,11 +74,11 @@ if (isset($_SESSION['u_id'])) {
                         <table class="table table-striped" id="book_stock_table">
                             <thead>
                                 <th>Serial ID</th>
-                                <th>Book Name</th>
-                                <th>Language</th>
-                                <th>Studing Students</th>
-                                <th>Extra Requests</th>
-                                <th>Available In Stock</th>
+                                <th>Subject</th>
+                                <th>Medium</th>
+                                <th> Student count</th>
+                                <th>Additinal Book </th>
+                                <th>Remaining books</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
