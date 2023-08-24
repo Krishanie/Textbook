@@ -3,6 +3,8 @@ session_start();
 if (isset($_SESSION['u_id'])) {
     include('frontend/header.php');
     include('frontend/sidebar.php');
+
+    if ($data[7][3] == 1 || $user_role == 'main-admin') {
 ?>
 
     <!-- Preloader -->
@@ -73,12 +75,12 @@ if (isset($_SESSION['u_id'])) {
     <!-- /.content-wrapper -->
 
     <!-- Edit Data Modal -->
-    <div class="modal fade" id="edit_data_modal">
+    <div class="modal fade all_modal" id="edit_data_modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Grade Book Connection</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" onclick="close_modal();" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -124,7 +126,7 @@ if (isset($_SESSION['u_id'])) {
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" onclick="close_modal();" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" onclick="edit_grade_conn()" class="btn btn-success">Edit</button>
                 </div>
             </div>
@@ -288,6 +290,9 @@ if (isset($_SESSION['u_id'])) {
 
 <?php
     include('frontend/footer.php');
+}else{
+    echo '<div class="content-wrapper"><center><h2>404<br>Page Not Found</h2></center></div>';
+}
 } else {
     header('Location: ../index.php');
 }

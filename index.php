@@ -5,11 +5,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <?php
+    include('control/db/conn.php');
+    $site_data = "SELECT * FROM book_site_data WHERE id='1'";
+    $site_data_run = mysqli_query($conn, $site_data);
+    while ($site_datas2 = $site_data_run->fetch_assoc()) {
+        $site_logo = $site_datas2['logo'];
+    }
+    ?>
     <title>Login Page</title>
+    <link rel="icon" type="image/x-icon" href="./admin/site_images/<?= $site_logo ?>">
 
     <link rel="stylesheet" href="assets/login-page/style.css">
 </head>
 
+<<<<<<< HEAD
 <?php
 include('control/db/conn.php');
 $site_data = "SELECT * FROM book_site_data WHERE id='1'";
@@ -21,12 +32,15 @@ while ($site_datas2 = $site_data_run->fetch_assoc()) {
 
 <body onkeyup="key(event)">
 
+=======
+<body onkeyup="key(event);">
+>>>>>>> fb47a028c0295fb58db2bf33a2c2a7ec1d8b09f6
 
 
     <div class="login-page">
         <div class="form">
             <div class="site-logo">
-                <center><img src="./admin/site_images/DSC logo (vector).png" width="120" alt="AdminLTE Logo" class="logo"></center>
+                <center><img src="./admin/site_images/<?= $site_logo ?>" width="120" alt="AdminLTE Logo" class="logo"></center>
             </div>
             <h3>Login</h3>
             <div class="login-form">
@@ -34,7 +48,6 @@ while ($site_datas2 = $site_data_run->fetch_assoc()) {
                 <input type="text" id="txt_uname" placeholder="username" />
                 <input type="password" id="txt_pass" placeholder="password" />
                 <button id="login-btn">Login</button>
-                <!-- <p class="message">Not registered? <a href="#">Create an account</a></p> -->
             </div>
         </div>
     </div>
@@ -105,3 +118,5 @@ while ($site_datas2 = $site_data_run->fetch_assoc()) {
         }
     }
 </script>
+
+                <!-- <p class="message">Lincoln University</p> -->

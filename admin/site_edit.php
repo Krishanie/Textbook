@@ -3,6 +3,8 @@ session_start();
 if (isset($_SESSION['u_id'])) {
     include('frontend/header.php');
     include('frontend/sidebar.php');
+
+    if ($data[1][3] == 1 || $user_role == 'main-admin') {
 ?>
 
     <!-- Preloader -->
@@ -143,6 +145,9 @@ if (isset($_SESSION['u_id'])) {
 
 <?php
     include('frontend/footer.php');
+}else{
+    echo '<div class="content-wrapper"><center><h2>404<br>Page Not Found</h2></center></div>';
+}
 } else {
     header('Location: ../index.php');
 }

@@ -6,6 +6,16 @@ body {
 }
 
 
+body {
+  background: #0061e0;
+  /* fallback for old browsers */
+  /* background: rgb(141, 194, 111);
+  background: linear-gradient(90deg, rgba(141, 194, 111, 1) 0%, rgba(118, 184, 82, 1) 50%); */
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .login-page {
   width: 360px;
   padding: 8% 0 0;
@@ -16,6 +26,7 @@ body {
   position: relative;
   z-index: 1;
   background: hsl(0, 0%, 100%);
+  border-radius: 13px;
   /* max-width: 300px; */
   margin: 0 auto 100px;
   padding: 45px;
@@ -112,6 +123,7 @@ body {
   color: #EF3B3A;
 }
 
+<<<<<<< HEAD
 body {
   /*background: #0061e0;*?
   /* fallback for old browsers */
@@ -122,6 +134,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+=======
+>>>>>>> fb47a028c0295fb58db2bf33a2c2a7ec1d8b09f6
 .err-msg {
   background-color: rgb(255, 91, 91);
   padding: 5px 3px 5px 3px;
@@ -130,9 +144,9 @@ body {
   font-size: 15px;
 }
 
-.site-logo{
-  /* display: flex;
+/* .site-logo{
+  display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px; */
-}
+  margin-bottom: 30px;
+} */

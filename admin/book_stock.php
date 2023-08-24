@@ -3,6 +3,8 @@ session_start();
 if (isset($_SESSION['u_id'])) {
     include('frontend/header.php');
     include('frontend/sidebar.php');
+
+    if ($data[2][3] == 1 || $user_role == 'main-admin') {
 ?>
 
     <!-- Preloader -->
@@ -54,13 +56,24 @@ if (isset($_SESSION['u_id'])) {
                                 <?php
                                 $grade_data = "SELECT * FROM available_grades";
                                 $grade_data_run = mysqli_query($conn, $grade_data);
-                                $i = 1;
-                                foreach ($grade_data_run as $grade) {
+                                if ($user_grade == 'all') {
+                                    $i = 1;
+                                    foreach ($grade_data_run as $grade) {
                                 ?>
-                                    <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
+                                        <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
 
+                                    <?php
+                                        $i = $i + 1;
+                                    }
+                                } else {
+                                    $grade_data_name = "SELECT * FROM available_grades WHERE value='$user_grade'";
+                                    $grade_data_name_run = mysqli_query($conn, $grade_data_name);
+                                    while ($grd_n = $grade_data_name_run->fetch_assoc()) {
+                                        $user_grade_name = $grd_n['grade'];
+                                    }
+                                    ?>
+                                    <option value="<?= $user_grade ?>"><?= $user_grade_name ?></option>
                                 <?php
-                                    $i = $i + 1;
                                 }
                                 ?>
                             </select>
@@ -105,12 +118,12 @@ if (isset($_SESSION['u_id'])) {
     <!-- /.content-wrapper -->
 
     <!-- Edit Data Modal -->
-    <div class="modal fade" id="edit_data_modal">
+    <div class="modal fade all_modal" id="edit_data_modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Stock Data</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" onclick="close_modal();"class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -159,7 +172,7 @@ if (isset($_SESSION['u_id'])) {
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" onclick="close_modal();"class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" onclick="edit_data()" class="btn btn-success">Edit</button>
                 </div>
             </div>
@@ -169,12 +182,12 @@ if (isset($_SESSION['u_id'])) {
     </div>
 
     <!-- Add Data Modal -->
-    <div class="modal fade" id="add_data_modal">
+    <div class="modal fade all_modal" id="add_data_modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Add New Stock</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" onclick="close_modal();"class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -183,18 +196,29 @@ if (isset($_SESSION['u_id'])) {
                         <label for="">Grade</label>
                         <select id="add_book_grade" class="form-control">
                             <option value="0" disabled selected>Select Grade</option>
-                            <?php
-                            $grade_data = "SELECT * FROM available_grades";
-                            $grade_data_run = mysqli_query($conn, $grade_data);
-                            $i = 1;
-                            foreach ($grade_data_run as $grade) {
-                            ?>
-                                <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
+                                <?php
+                                $grade_data = "SELECT * FROM available_grades";
+                                $grade_data_run = mysqli_query($conn, $grade_data);
+                                if ($user_grade == 'all') {
+                                    $i = 1;
+                                    foreach ($grade_data_run as $grade) {
+                                ?>
+                                        <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
 
-                            <?php
-                                $i = $i + 1;
-                            }
-                            ?>
+                                    <?php
+                                        $i = $i + 1;
+                                    }
+                                } else {
+                                    $grade_data_name = "SELECT * FROM available_grades WHERE value='$user_grade'";
+                                    $grade_data_name_run = mysqli_query($conn, $grade_data_name);
+                                    while ($grd_n = $grade_data_name_run->fetch_assoc()) {
+                                        $user_grade_name = $grd_n['grade'];
+                                    }
+                                    ?>
+                                    <option value="<?= $user_grade ?>"><?= $user_grade_name ?></option>
+                                <?php
+                                }
+                                ?>
                         </select>
                     </div>
                     <div class="form-group">
@@ -239,7 +263,7 @@ if (isset($_SESSION['u_id'])) {
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" onclick="close_modal();"class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" onclick="add_new_stock()" class="btn btn-primary">Add</button>
                 </div>
             </div>
@@ -249,12 +273,12 @@ if (isset($_SESSION['u_id'])) {
     </div>
 
     <!-- Delete Confirm Modal -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="confirm_modal">
+    <div class="modal fade all_modal" tabindex="-1" role="dialog" id="confirm_modal">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Are You Sure?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" onclick="close_modal();" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -263,7 +287,7 @@ if (isset($_SESSION['u_id'])) {
                     <input type="hidden" id="confirm_val">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" onclick="close_modal();" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-danger" id="confirm_m_btn" onclick="delete_stock()">Yes, Delete!</button>
                 </div>
             </div>
@@ -272,6 +296,9 @@ if (isset($_SESSION['u_id'])) {
 
 <?php
     include('frontend/footer.php');
+}else{
+    echo '<div class="content-wrapper"><center><h2>404<br>Page Not Found</h2></center></div>';
+}
 } else {
     header('Location: ../index.php');
 }

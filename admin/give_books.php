@@ -3,6 +3,8 @@ session_start();
 if (isset($_SESSION['u_id'])) {
     include('frontend/header.php');
     include('frontend/sidebar.php');
+
+    if ($data[4][3] == 1 || $user_role == 'main-admin') {
 ?>
 
     <!-- Preloader -->
@@ -54,13 +56,24 @@ if (isset($_SESSION['u_id'])) {
                                 <?php
                                 $grade_data = "SELECT * FROM available_grades";
                                 $grade_data_run = mysqli_query($conn, $grade_data);
-                                $i = 1;
-                                foreach ($grade_data_run as $grade) {
+                                if ($user_grade == 'all') {
+                                    $i = 1;
+                                    foreach ($grade_data_run as $grade) {
                                 ?>
-                                    <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
+                                        <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
 
+                                    <?php
+                                        $i = $i + 1;
+                                    }
+                                } else {
+                                    $grade_data_name = "SELECT * FROM available_grades WHERE value='$user_grade'";
+                                    $grade_data_name_run = mysqli_query($conn, $grade_data_name);
+                                    while ($grd_n = $grade_data_name_run->fetch_assoc()) {
+                                        $user_grade_name = $grd_n['grade'];
+                                    }
+                                    ?>
+                                    <option value="<?= $user_grade ?>"><?= $user_grade_name ?></option>
                                 <?php
-                                    $i = $i + 1;
                                 }
                                 ?>
                             </select>
@@ -103,7 +116,7 @@ if (isset($_SESSION['u_id'])) {
     <!-- /.content-wrapper -->
 
     <!-- Edit Data Modal -->
-    <div class="modal fade" id="give_books_modal">
+    <div class="modal fade all_modal" id="give_books_modal">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="overlay" id="overlay_modal">
@@ -111,7 +124,7 @@ if (isset($_SESSION['u_id'])) {
                 </div>
                 <div class="modal-header">
                     <h4 class="modal-title">Give Books</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" onclick="close_modal();"class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -129,12 +142,12 @@ if (isset($_SESSION['u_id'])) {
     </div>
 
     <!-- Delete Confirm Modal -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="confirm_modal">
+    <div class="modal fade all_modal" tabindex="-1" role="dialog" id="confirm_modal">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Are You Sure?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" onclick="close_modal();" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -143,7 +156,7 @@ if (isset($_SESSION['u_id'])) {
                     <input type="hidden" id="confirm_val">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" onclick="close_modal();"class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-danger" id="confirm_m_btn" onclick="delete_student()">Yes, Delete!</button>
                 </div>
             </div>
@@ -152,6 +165,9 @@ if (isset($_SESSION['u_id'])) {
 
 <?php
     include('frontend/footer.php');
+}else{
+    echo '<div class="content-wrapper"><center><h2>404<br>Page Not Found</h2></center></div>';
+}
 } else {
     header('Location: ../index.php');
 }
@@ -213,6 +229,7 @@ if (isset($_SESSION['u_id'])) {
                 },
             ],
         });
+        clearconsole();  
     }
 
     function check(id, book_id) {
@@ -335,4 +352,15 @@ if (isset($_SESSION['u_id'])) {
     function reload_table() {
         table.ajax.reload(null, false);
     }
+
+clearconsole();  
+
+    function clearconsole() 
+ {  
+   console.log(window.console);   
+   if(window.console ) 
+   {     
+     console.clear();   
+   } 
+ } 
 </script>

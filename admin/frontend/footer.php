@@ -5,9 +5,6 @@ if (isset($_SESSION['u_id'])) {
     <footer class="main-footer">
         <strong>Copyright &copy; 2023 <a href="https://www.defencesc.lk/">Defencesc.lk</a>.</strong>
         All rights reserved.
-        <div class="float-right d-none d-sm-inline-block">
-            <b>Creator</b> Lincoln University
-        </div>
     </footer>
 
     <!-- Control Sidebar -->
@@ -17,6 +14,11 @@ if (isset($_SESSION['u_id'])) {
     <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
+
+    
+    <!-- <div class="float-right d-none d-sm-inline-block">
+            <b>Creator</b> Lincoln University
+        </div> -->
 
     <!-- jQuery -->
     <script src="../admin/assets/js/jquery.min.js"></script>
@@ -107,6 +109,10 @@ if (isset($_SESSION['u_id'])) {
                 toastr.warning(msg);
             }
         }
+
+        function close_modal(){
+            $('.all_modal').modal('hide');
+        } 
     </script>
 
 <?php

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2023 at 05:54 PM
+-- Generation Time: Apr 24, 2023 at 04:09 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `textbook_issuing_system_new_version`
+-- Database: `textbook-issue-system`
 --
 
 -- --------------------------------------------------------
@@ -66,7 +66,7 @@ CREATE TABLE `book_site_data` (
 --
 
 INSERT INTO `book_site_data` (`id`, `name`, `title`, `logo`) VALUES
-(1, 'Text Book Issuing System', 'Defence Services College', 'site_logo-63ce34f1266b41.18466967.png');
+(1, 'Text Book Issuing System', 'Defence Services College', 'site_logo-642ae3859bfdd5.99703378.png');
 
 -- --------------------------------------------------------
 
@@ -91,10 +91,9 @@ CREATE TABLE `book_stock` (
 --
 
 INSERT INTO `book_stock` (`book_id`, `book_serial_id`, `book_name`, `book_language`, `book_grade`, `studing_students`, `leftover_books`, `extra_requests`, `total_books`) VALUES
-(1, '342', 'Maths', 's', 'grd1', '24', '2', '5', '36'),
-(4, '334', 'Sinhala', 's', 'grd2', '34', '5', '2', '45'),
-(5, '345', 'sdg', 's', 'grd1', '234', '235', '234', '234'),
-(6, '234', 'rtgjhrtrfhh weryrwehrhy', 's', 'grd1', '456', '46', '454', '5');
+(4, '334', 'Sinhala', 's', 'grd2', '34', '2', '2', '46'),
+(5, '345', 'sdg', 's', 'grd1', '234', '232', '234', '238'),
+(6, '234', 'rtgjhrtrfhh weryrwehrhy', 's', 'grd1', '456', '43', '454', '8');
 
 -- --------------------------------------------------------
 
@@ -226,9 +225,37 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`id`, `name`, `username`, `password`, `img`, `role`, `grade`, `lang`, `added_date`, `last_login`) VALUES
-(1, 'Vibodha Sasmitha', 'main-admin', '12345', 'main-default.png', 'main-admin', 'all', 'sin', '', '1680252529'),
+(1, 'Vibodha Sasmitha', 'main-admin', '12345', 'main-default.png', 'main-admin', 'all', 'en', '', '1680252529'),
 (4, 'Admin 1', 'admin1', '123', 'default.png', 'admin', 'grd1', 'en', '', '1679326421'),
 (5, 'Admin 2', 'admin2', '123', 'default.png', 'admin', 'grd2', 'en', '', '1674794690');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `view_pages`
+--
+
+CREATE TABLE `view_pages` (
+  `id` int(11) NOT NULL,
+  `page_name` text NOT NULL,
+  `page_find` text NOT NULL,
+  `page_view` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `view_pages`
+--
+
+INSERT INTO `view_pages` (`id`, `page_name`, `page_find`, `page_view`) VALUES
+(1, 'Dashboard', 'dash', 1),
+(2, 'Site Data', 'sitedata', 0),
+(3, 'Book Stock', 'bookstock', 1),
+(4, 'Students', 'students', 1),
+(5, 'Distribution of books to students', 'distributionbooks', 1),
+(6, 'Take Books From Students', 'takebooks', 1),
+(7, 'Admins', 'admins', 0),
+(8, 'Grade Connections', 'grdconn', 0),
+(9, 'Admin View Pages', 'adminview', 0);
 
 -- --------------------------------------------------------
 
@@ -257,7 +284,12 @@ INSERT INTO `will_give_books` (`id`, `book_id`, `stu_id`, `book_grade`, `give`) 
 (6, '5', '18', 'grd1', '0'),
 (7, '6', '27', 'grd1', '1'),
 (8, '1', '27', 'false', '1'),
-(9, '4', '43', 'false', '1');
+(9, '4', '43', 'false', '1'),
+(10, '1', '27', 'grd1', '0'),
+(11, '5', '27', 'grd1', '1'),
+(12, '4', '44', 'grd2', '0'),
+(13, '4', '48', 'grd2', '1'),
+(14, '4', '50', 'grd2', '1');
 
 -- --------------------------------------------------------
 
@@ -282,7 +314,7 @@ INSERT INTO `will_take_books` (`id`, `book_id`, `stu_id`, `book_grade`, `take`) 
 (2, '3', '1', 'grd2', '1'),
 (3, '1', '1', 'grd2', '1'),
 (4, '6', '27', 'grd1', '1'),
-(5, '5', '27', 'grd1', '0'),
+(5, '5', '27', 'grd1', '1'),
 (6, '1', '27', 'grd1', '1'),
 (7, '4', '47', 'grd2', '1'),
 (8, '4', '42', 'grd2', '1');
@@ -325,6 +357,12 @@ ALTER TABLE `students`
 -- Indexes for table `teachers`
 --
 ALTER TABLE `teachers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `view_pages`
+--
+ALTER TABLE `view_pages`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -380,10 +418,16 @@ ALTER TABLE `teachers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `view_pages`
+--
+ALTER TABLE `view_pages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `will_give_books`
 --
 ALTER TABLE `will_give_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `will_take_books`
