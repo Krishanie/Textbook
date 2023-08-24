@@ -6,16 +6,6 @@ body {
 }
 
 
-body {
-  background: #0061e0;
-  /* fallback for old browsers */
-  /* background: rgb(141, 194, 111);
-  background: linear-gradient(90deg, rgba(141, 194, 111, 1) 0%, rgba(118, 184, 82, 1) 50%); */
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 .login-page {
   width: 360px;
   padding: 8% 0 0;
@@ -26,7 +16,6 @@ body {
   position: relative;
   z-index: 1;
   background: hsl(0, 0%, 100%);
-  border-radius: 13px;
   /* max-width: 300px; */
   margin: 0 auto 100px;
   padding: 45px;
@@ -50,7 +39,11 @@ body {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
+<<<<<<< HEAD
   background: #030d1b;
+=======
+  background: #4CAF50;
+>>>>>>> 1a0cab5a65bd0b43edc63ab49264696024fbd4d6
   width: 100%;
   border: 0;
   padding: 15px;
@@ -64,7 +57,11 @@ body {
 .form button:hover,
 .form button:active,
 .form button:focus {
+<<<<<<< HEAD
   background: #05070a;
+=======
+  background: #43A047;
+>>>>>>> 1a0cab5a65bd0b43edc63ab49264696024fbd4d6
 }
 
 .form .message {
@@ -124,18 +121,29 @@ body {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 body {
   /*background: #0061e0;*?
   /* fallback for old browsers */
   /* background: rgb(141, 194, 111);
   background: linear-gradient(90deg, rgba(141, 194, 111, 1) 0%, rgba(118, 184, 82, 1) 50%); */
+=======
+body {
+  background: #76b852;
+  /* fallback for old browsers */
+  background: rgb(141, 194, 111);
+  background: linear-gradient(90deg, rgba(141, 194, 111, 1) 0%, rgba(118, 184, 82, 1) 50%);
+>>>>>>> 1a0cab5a65bd0b43edc63ab49264696024fbd4d6
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> fb47a028c0295fb58db2bf33a2c2a7ec1d8b09f6
+=======
+>>>>>>> 1a0cab5a65bd0b43edc63ab49264696024fbd4d6
 .err-msg {
   background-color: rgb(255, 91, 91);
   padding: 5px 3px 5px 3px;
@@ -144,9 +152,9 @@ body {
   font-size: 15px;
 }
 
-/* .site-logo{
-  display: flex;
+.site-logo{
+  /* display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
-} */
+  margin-bottom: 30px; */
+}
