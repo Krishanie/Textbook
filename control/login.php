@@ -1,6 +1,6 @@
 <?php
 include('db/conn.php');
-session_start();
+se8ssion_start();
 
 if (isset($_POST['get_data'])) {
 
