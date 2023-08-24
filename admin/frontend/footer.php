@@ -3,7 +3,7 @@ if (isset($_SESSION['u_id'])) {
 ?>
 
     <footer class="main-footer">
-        <strong>Copyright &copy; 2023 <a href="https://www.defencesc.lk/">DefenceSC.lk</a>.</strong>
+        <strong>Copyright &copy; 2023 <a href="https://www.defencesc.lk/">Defencesc.lk</a>.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
             <b>Creator</b> Lincoln University
