@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="assets/login-page/style.css">
 </head>
 
-<<<<<<< HEAD
+
 <?php
 include('control/db/conn.php');
 $site_data = "SELECT * FROM book_site_data WHERE id='1'";
@@ -31,11 +31,6 @@ while ($site_datas2 = $site_data_run->fetch_assoc()) {
 ?>
 
 <body onkeyup="key(event)">
-
-=======
-<body onkeyup="key(event);">
->>>>>>> fb47a028c0295fb58db2bf33a2c2a7ec1d8b09f6
-
 
     <div class="login-page">
         <div class="form">
