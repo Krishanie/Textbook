@@ -7,52 +7,195 @@ if (isset($_SESSION['u_id'])) {
     if ($data[2][3] == 1 || $user_role == 'main-admin') {
 ?>
 
-    <!-- Preloader -->
-    <!-- <div class="preloader flex-column justify-content-center align-items-center">
+        <!-- Preloader -->
+        <!-- <div class="preloader flex-column justify-content-center align-items-center">
   <img class="animation__shake" src="assets/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
 </div> -->
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Book Stock</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a class="nav-link text-primary" href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Book Stock</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Book Stock</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a class="nav-link text-primary" href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Book Stock</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
 
-        <!-- <?php
-                if (isset($_GET['grade'])) {
-                ?>
+            <!-- <?php
+                    if (isset($_GET['grade'])) {
+                    ?>
             <input type="hidden" value="1" id="check_if_grade">
         <?php
-                } else {
+                    } else {
         ?>
             <input type="hidden" value="0" id="check_if_grade">
         <?php
-                }
+                    }
         ?> -->
 
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
 
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Book Stock Details</h3>
-                        <div class="col-md-3 float-end">
-                            <select id="table_data_grade" class="form-control mb-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Book Stock Details</h3>
+                            <div class="col-md-3 float-end">
+                                <select id="table_data_grade" class="form-control mb-2">
+                                    <?php
+                                    $grade_data = "SELECT * FROM available_grades";
+                                    $grade_data_run = mysqli_query($conn, $grade_data);
+                                    if ($user_grade == 'all') {
+                                        $i = 1;
+                                        foreach ($grade_data_run as $grade) {
+                                    ?>
+                                            <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
+
+                                        <?php
+                                            $i = $i + 1;
+                                        }
+                                    } else {
+                                        $grade_data_name = "SELECT * FROM available_grades WHERE value='$user_grade'";
+                                        $grade_data_name_run = mysqli_query($conn, $grade_data_name);
+                                        while ($grd_n = $grade_data_name_run->fetch_assoc()) {
+                                            $user_grade_name = $grd_n['grade'];
+                                        }
+                                        ?>
+                                        <option value="<?= $user_grade ?>"><?= $user_grade_name ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary float-end" id="add_new_stock" onclick="add_modal()">Add New Stock</button>
+                        </div>
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div id="err-msg"></div>
+                            <table class="table table-striped" id="book_stock_table">
+                                <thead>
+                                    <th>Serial ID</th>
+                                    <th>Subject</th>
+                                    <th>Medium</th>
+                                    <th> Student count</th>
+                                    <th>Additinal Book </th>
+                                    <th>Remaining books</th>
+                                    <th>Action</th>
+                                </thead>
+                                <tbody>
+                                    <!-- <tr>
+                                    <td>001</td>
+                                    <td>Buddhism</td>
+                                    <td>S</td>
+                                    <td>222</td>
+                                    <td>222</td>
+                                    <td>222</td>
+                                    <td>222</td>
+                                </tr> -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Edit Data Modal -->
+        <div class="modal fade all_modal" id="edit_data_modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Stock Data</h4>
+                        <button type="button" onclick="close_modal();" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="edit_book_stock_id">
+                        <input type="hidden" id="edit_book_grade" value="normal">
+                        <div class="form-group">
+                            <label for="">Serial ID</label>
+                            <input type="text" id="edit_s_id" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Book Name</label>
+                            <input type="text" id="edit_book_name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Book Language</label>
+                            <select id="edit_book_language" class="form-control">
+                                <option value="0" disabled selected>Select Language</option>
+                                <option value="s">Sinhala</option>
+                                <option value="e">English</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Studing Students Count</label>
+                                    <input type="text" id="edit_book_study_students" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Leftover Books</label>
+                                    <input type="text" id="edit_book_leftover" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Extra Requests</label>
+                                    <input type="text" id="edit_book_extra_requests" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Total Books</label>
+                                    <input type="text" id="edit_book_total" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" onclick="close_modal();" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" onclick="edit_data()" class="btn btn-success">Edit</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+        <!-- Add Data Modal -->
+        <div class="modal fade all_modal" id="add_data_modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add New Stock</h4>
+                        <button type="button" onclick="close_modal();" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="">Grade</label>
+                            <select id="add_book_grade" class="form-control">
+                                <option value="0" disabled selected>Select Grade</option>
                                 <?php
                                 $grade_data = "SELECT * FROM available_grades";
                                 $grade_data_run = mysqli_query($conn, $grade_data);
@@ -78,227 +221,84 @@ if (isset($_SESSION['u_id'])) {
                                 ?>
                             </select>
                         </div>
-                        <button class="btn btn-primary float-end" id="add_new_stock" onclick="add_modal()">Add New Stock</button>
-                    </div>
-
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <div id="err-msg"></div>
-                        <table class="table table-striped" id="book_stock_table">
-                            <thead>
-                                <th>Serial ID</th>
-                                <th>Subject</th>
-                                <th>Medium</th>
-                                <th> Student count</th>
-                                <th>Additinal Book </th>
-                                <th>Remaining books</th>
-                                <th>Action</th>
-                            </thead>
-                            <tbody>
-                                <!-- <tr>
-                                    <td>001</td>
-                                    <td>Buddhism</td>
-                                    <td>S</td>
-                                    <td>222</td>
-                                    <td>222</td>
-                                    <td>222</td>
-                                    <td>222</td>
-                                </tr> -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-
-            </div>
-            <!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-
-    <!-- Edit Data Modal -->
-    <div class="modal fade all_modal" id="edit_data_modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Stock Data</h4>
-                    <button type="button" onclick="close_modal();"class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="edit_book_stock_id">
-                    <input type="hidden" id="edit_book_grade" value="normal">
-                    <div class="form-group">
-                        <label for="">Serial ID</label>
-                        <input type="text" id="edit_s_id" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="">Book Name</label>
-                        <input type="text" id="edit_book_name" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="">Book Language</label>
-                        <select id="edit_book_language" class="form-control">
-                            <option value="0" disabled selected>Select Language</option>
-                            <option value="s">Sinhala</option>
-                            <option value="e">English</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="">Studing Students Count</label>
-                                <input type="text" id="edit_book_study_students" class="form-control">
+                        <div class="form-group">
+                            <label for="">Serial ID</label>
+                            <input type="text" id="add_s_id" class="form-control" placeholder="Enter Serial ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Book Name</label>
+                            <input type="text" id="add_book_name" class="form-control" placeholder="Enter Book Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Book Language</label>
+                            <select id="add_book_language" class="form-control">
+                                <option value="0" disabled selected>Select Language</option>
+                                <option value="s">Sinhala</option>
+                                <option value="e">English</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Studing Students Count</label>
+                                    <input type="text" id="add_book_study_students" class="form-control" placeholder="Enter Studing Students">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Leftover Books</label>
+                                    <input type="text" id="add_book_leftover" class="form-control" placeholder="Enter Leftover Books">
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <label for="">Leftover Books</label>
-                                <input type="text" id="edit_book_leftover" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Extra Requests</label>
+                                    <input type="text" id="add_book_extra_requests" class="form-control" placeholder="Enter Extra Books">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Total Books</label>
+                                    <input type="text" id="add_book_total" class="form-control" placeholder="Enter Total Books">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="">Extra Requests</label>
-                                <input type="text" id="edit_book_extra_requests" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="">Total Books</label>
-                                <input type="text" id="edit_book_total" class="form-control">
-                            </div>
-                        </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" onclick="close_modal();" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" onclick="add_new_stock()" class="btn btn-primary">Add</button>
                     </div>
                 </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" onclick="close_modal();"class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" onclick="edit_data()" class="btn btn-success">Edit</button>
-                </div>
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-    </div>
 
-    <!-- Add Data Modal -->
-    <div class="modal fade all_modal" id="add_data_modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add New Stock</h4>
-                    <button type="button" onclick="close_modal();"class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="">Grade</label>
-                        <select id="add_book_grade" class="form-control">
-                            <option value="0" disabled selected>Select Grade</option>
-                                <?php
-                                $grade_data = "SELECT * FROM available_grades";
-                                $grade_data_run = mysqli_query($conn, $grade_data);
-                                if ($user_grade == 'all') {
-                                    $i = 1;
-                                    foreach ($grade_data_run as $grade) {
-                                ?>
-                                        <option value="<?= $grade['value'] ?>" id="grade_get_<?= $i ?>"><?= $grade['grade'] ?></option>
-
-                                    <?php
-                                        $i = $i + 1;
-                                    }
-                                } else {
-                                    $grade_data_name = "SELECT * FROM available_grades WHERE value='$user_grade'";
-                                    $grade_data_name_run = mysqli_query($conn, $grade_data_name);
-                                    while ($grd_n = $grade_data_name_run->fetch_assoc()) {
-                                        $user_grade_name = $grd_n['grade'];
-                                    }
-                                    ?>
-                                    <option value="<?= $user_grade ?>"><?= $user_grade_name ?></option>
-                                <?php
-                                }
-                                ?>
-                        </select>
+        <!-- Delete Confirm Modal -->
+        <div class="modal fade all_modal" tabindex="-1" role="dialog" id="confirm_modal">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Are You Sure?</h5>
+                        <button type="button" onclick="close_modal();" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label for="">Serial ID</label>
-                        <input type="text" id="add_s_id" class="form-control" placeholder="Enter Serial ID">
+                    <div class="modal-body">
+                        <p id="confirm_m_msg">You Want To Delete This Stock?</p>
+                        <input type="hidden" id="confirm_val">
                     </div>
-                    <div class="form-group">
-                        <label for="">Book Name</label>
-                        <input type="text" id="add_book_name" class="form-control" placeholder="Enter Book Name">
+                    <div class="modal-footer">
+                        <button type="button" onclick="close_modal();" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" id="confirm_m_btn" onclick="delete_stock()">Yes, Delete!</button>
                     </div>
-                    <div class="form-group">
-                        <label for="">Book Language</label>
-                        <select id="add_book_language" class="form-control">
-                            <option value="0" disabled selected>Select Language</option>
-                            <option value="s">Sinhala</option>
-                            <option value="e">English</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="">Studing Students Count</label>
-                                <input type="text" id="add_book_study_students" class="form-control" placeholder="Enter Studing Students">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="">Leftover Books</label>
-                                <input type="text" id="add_book_leftover" class="form-control" placeholder="Enter Leftover Books">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="">Extra Requests</label>
-                                <input type="text" id="add_book_extra_requests" class="form-control" placeholder="Enter Extra Books">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="">Total Books</label>
-                                <input type="text" id="add_book_total" class="form-control" placeholder="Enter Total Books">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" onclick="close_modal();"class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" onclick="add_new_stock()" class="btn btn-primary">Add</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-
-    <!-- Delete Confirm Modal -->
-    <div class="modal fade all_modal" tabindex="-1" role="dialog" id="confirm_modal">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Are You Sure?</h5>
-                    <button type="button" onclick="close_modal();" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p id="confirm_m_msg">You Want To Delete This Stock?</p>
-                    <input type="hidden" id="confirm_val">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" onclick="close_modal();" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" id="confirm_m_btn" onclick="delete_stock()">Yes, Delete!</button>
                 </div>
             </div>
         </div>
-    </div>
 
 <?php
-    include('frontend/footer.php');
-}else{
-    echo '<div class="content-wrapper"><center><h2>404<br>Page Not Found</h2></center></div>';
-}
+        include('frontend/footer.php');
+    } else {
+        echo '<div class="content-wrapper"><center><h2>404<br>Page Not Found</h2></center></div>';
+    }
 } else {
     header('Location: ../index.php');
 }
@@ -344,12 +344,25 @@ if (isset($_SESSION['u_id'])) {
             },
             //Set column definition initialisation properties.
             "columnDefs": [{
+                    "targets": [1],
+                    "render": function(data, type, row) {
+
+                        if (row[2] == 's') {
+                            return row[1] + " (Sinhala)"
+                        } else if (row[2] == 'e') {
+                            return row[1] + " (English)"
+                        } else if (row[2] == 't') {
+                            return row[1] + " (Tamil)"
+                        }
+                    },
+                },
+                {
                     "targets": [2],
                     "render": function(data, type, row) {
                         if (row[2] == "s") {
                             return "Sinhala"
                         } else if (row[2] == "e") {
-                            return "English";
+                            return "English"
                         }
                     },
                 },
@@ -377,6 +390,7 @@ if (isset($_SESSION['u_id'])) {
             success: function(response) {
                 var res = jQuery.parseJSON(response);
                 // console.log(response);
+
                 $('#edit_s_id').val(res.data.book_serial_id);
                 $('#edit_book_name').val(res.data.book_name);
                 $('#edit_book_language option[value=' + res.data.book_language + ']').attr('selected', 'selected');
