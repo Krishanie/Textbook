@@ -29,14 +29,14 @@ if (isset($_POST['get_student_book_data'])) {
             }
 
             if ($ch == 0) {
-                $html .= '<div onclick="check('  . $take_ch_id . ', '  . $book_id . ')" class="card text-center" style="margin-left: 5px; margin-right: 5px; width: auto; padding-left: 15px; padding-right: 15px;" id="tick_box_' . $book["book_id"] . '">
+                $html .= '<div onclick="check('  . $take_ch_id . ', '  . $book_id . ')" class="card text-center" style="margin-left: 5px; margin-right: 5px; width: auto; padding-left: 15px; padding-right: 15px; cursor: pointer;" id="tick_box_' . $book["book_id"] . '">
         <div class="mb-1">' . $book["book_name"] . '</div>
         <div style="pointer-events:none;">
         <img src="../admin/site_images/times-circle-regular.svg" width="25" class="mb-2" style="filter: invert(10%) sepia(90%) saturate(6437%) hue-rotate(360deg) brightness(93%) contrast(108%);" />
         </div>
     </div>';
             } else {
-                $html .= '<div onclick="uncheck(' . $take_ch_id . ', '  . $book_id . ')" class="card text-center" style="margin-left: 5px; margin-right: 5px; width: auto; padding-left: 15px; padding-right: 15px;"" id="tick_box_' . $book["book_id"] . '">
+                $html .= '<div onclick="uncheck(' . $take_ch_id . ', '  . $book_id . ')" class="card text-center" style="margin-left: 5px; margin-right: 5px; width: auto; padding-left: 15px; padding-right: 15px; cursor: pointer;"" id="tick_box_' . $book["book_id"] . '">
         <div class="mb-1">' . $book["book_name"] . '</div>
         <div style="pointer-events:none;">
         <img src="../admin/site_images/check-circle-regular.svg" width="25" class="mb-2" style="filter: invert(40%) sepia(82%) saturate(1443%) hue-rotate(89deg) brightness(110%) contrast(111%);" />

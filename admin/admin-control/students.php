@@ -108,7 +108,7 @@ if (isset($_POST['add_data'])) {
     $student_grade = $_POST['student_grade'];
     $student_class = $_POST['student_class'];
 
-    $add_student = "INSERT INTO students(name, index_no, grade, class, language, added_date) VALUES ('$student_name','$index_no','$student_grade','$student_class','$student_language','$date')";
+    $add_student = "INSERT INTO students(name, index_no, grade, class, language, added_date) VALUES ('$student_name','$index_no','$student_grade','$student_class','$student_language','$todayDateAll')";
     $add_student_run = mysqli_query($conn, $add_student);
 
     if ($add_student_run) {
@@ -186,7 +186,7 @@ if (isset($_POST['excel_import'])) {
                         $num_exists = $num_exists + 1;
                     }
                 } else {
-                    $query = "INSERT INTO `students`(`name`, `index_no`, `grade`, `class`, `language`) VALUES ('$name','$index_no','$grade','$class','$language')";
+                    $query = "INSERT INTO `students`(`name`, `index_no`, `grade`, `class`, `language`, `added_date`) VALUES ('$name','$index_no','$grade','$class','$language','$todayDateAll')";
                     $query_run = mysqli_query($conn, $query);
                 }
             }
